@@ -28,20 +28,21 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-export type UserType = "disabled" | "caregiver";
+export type UserType = "disabled" | "guardian";
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [userNickname, setUserNickname] = useState<string>(
     () => localStorage.getItem("userNickname") || "username"
   );
-  const [userType, setUserType] = useState<UserType>("disabled");
+  const [userType, setUserType] = useState<UserType>("guardian");
 
   // 더미용 - 삭제할 것
   useEffect(() => {
     setIsAuthenticated(true);
     setUserNickname("username");
-    setUserType("disabled");
+    // 토글하면서 테스트
+    setUserType("guardian");
   }, []);
 
   //   const location = useLocation();
