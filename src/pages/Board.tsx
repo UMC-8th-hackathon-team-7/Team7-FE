@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CategoryBtn from "@/components/board/CategoryBtn";
 
 import BoardContent from "@/components/board/BoardContent";
@@ -17,6 +17,7 @@ import bell from "./../assets/board/ic_bell.svg";
 import openArrow from "./../assets/board/ic_open_arrow.svg";
 import search from "./../assets/board/ic_search.svg";
 import plus from "./../assets/board/ic_plus.svg";
+import clsx from "clsx";
 
 type Category =
   | "전체"
@@ -29,9 +30,35 @@ type Category =
 const Board = () => {
   const [category, setCategory] = useState<Category>("전체");
 
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  // sticky 시 색상 변경
+  const [isSticky, setIsSticky] = useState(false);
+  useEffect(() => {
+    if (!sentinelRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // sentinel이 뷰포트에서 사라지면 sticky 발동
+        setIsSticky(entry.intersectionRatio < 1);
+      },
+      { threshold: [1] }
+    );
+
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <main className="flex-1 overflow-y-auto mx-auto w-full bg-[var(--color-root-strong)] relative">
-      <section className="flex justify-between sticky top-[0px] px-[16px] py-[12px] w-full bg-[var(--color-root-strong)] z-10">
+      <div ref={sentinelRef} className="h-0" />
+
+      <section
+        className={clsx(
+          "flex justify-between sticky top-[0px] px-[16px] py-[12px] w-full z-10 transition-colors duration-200",
+          isSticky ? "bg-[#fff]" : "bg-[var(--color-root-strong)]"
+        )}
+      >
         <div className="flex items-center gap-[6px]">
           <h3 className="text-title font-[700]">공덕역</h3>
           <button>
