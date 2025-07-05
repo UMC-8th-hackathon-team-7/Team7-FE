@@ -104,12 +104,12 @@ const handleSubmit = () => {
     </CategoryBtn>
   ))}
 </div>
+            <SectionHeader title="제목 및 내용" />
             <Input
   label="도움 제목"
   placeholder = "20자 이하로 간단하게 작성해주세요"
   onChange={(val) => setTitle(val)}
 />
-            <SectionHeader title="제목 및 내용" />
             <Input
   label="도움 내용"
   placeholder = "도움이 필요한 내용, 날짜, 특이사항을 자세하게 작성해주세요"
