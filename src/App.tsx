@@ -1,10 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout";
 import HelpViewPage from "@/pages/HelpViewPage";
-import HelpAskPage from "@/pages/HelpAskPage"
+import HelpAskPage from "@/pages/HelpAskPage";
 import Board from "./pages/Board";
 import MyActivity from "./pages/my_activity/MyActivity";
 import UseMileage from "./pages/my_activity/UseMileage";
+import Landing from "./pages/auth/Landing";
+import NoBottomBarLayout from "./layouts/NoBottomBarLayout";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +15,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "help/view/:id",
-        element: <HelpViewPage />, 
+        element: <HelpViewPage />,
       },
       {
         path: "help/ask",
@@ -30,6 +32,16 @@ const router = createBrowserRouter([
       {
         path: "use-mileage",
         element: <UseMileage />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <NoBottomBarLayout />,
+    children: [
+      {
+        index: true,
+        element: <Landing />,
       },
     ],
   },
