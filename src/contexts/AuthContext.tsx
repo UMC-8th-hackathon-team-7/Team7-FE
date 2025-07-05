@@ -26,7 +26,10 @@ export type UserType = "disabled" | "guardian";
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [userType, setUserType] = useState<UserType>("guardian");
+  const storedUserType = Cookies.get("userType") as UserType | undefined;
+  const [userType, setUserType] = useState<UserType>(
+    storedUserType ?? "guardian"
+  );
 
   //   const location = useLocation();
 
@@ -37,6 +40,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = (accessToken: string, userType: UserType) => {
     Cookies.set("accessToken", accessToken, {
+      secure: false,
+      sameSite: "Strict",
+    });
+    Cookies.set("userType", userType, {
+      expires: 7,
+      path: "/",
       secure: false,
       sameSite: "Strict",
     });
