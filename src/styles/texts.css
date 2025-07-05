@@ -1,0 +1,61 @@
+.text-display {
+  font-size: var(--Size-Display, 48px);
+  line-height: var(--Line-Height-Display, 70px); /* 145.833% */
+  letter-spacing: -1.44px;
+}
+
+.text-title {
+  font-size: var(--Size-Title, 24px);
+  line-height: var(--Line-Height-Title, 34px); /* 141.667% */
+  letter-spacing: -0.48px;
+}
+
+.text-headline {
+  font-size: var(--Size-Headline, 20px);
+  line-height: var(--Line-Height-Headline, 28px); /* 140% */
+  letter-spacing: -0.4px;
+}
+
+.text-subhead {
+  font-size: var(--Size-Subhead, 18px);
+  line-height: var(--Line-Height-Subhead, 26px); /* 144.444% */
+  letter-spacing: -0.36px;
+}
+
+.text-body {
+  font-size: var(--Size-Body, 16px);
+  line-height: var(--Line-Height-Body, 24px); /* 150% */
+  letter-spacing: -0.32px;
+}
+
+.text-p-large {
+  /* Paragraph/Large */
+  font-size: var(--Size-Body, 16px);
+  line-height: var(--Line-Height-Body, 24px); /* 150% */
+  letter-spacing: -0.32px;
+}
+
+.text-p-small {
+  /* Paragraph/Small */
+  font-size: var(--Size-Paragraph-Small, 14px);
+  line-height: var(--Line-Height-Paragraph-Small, 24px); /* 171.429% */
+  letter-spacing: -0.42px;
+}
+
+.text-callout {
+  font-size: var(--Size-Callout, 14px);
+  line-height: var(--Line-Height-Callout, 20px); /* 142.857% */
+  letter-spacing: -0.28px;
+}
+
+.text-footnote {
+  font-size: var(--Size-Footnote, 12px);
+  line-height: var(--Line-Height-Footnote, 18px); /* 150% */
+  letter-spacing: -0.24px;
+}
+
+.text-caption {
+  font-size: var(--Size-Body, 16px);
+  line-height: var(--Line-Height-Body, 24px); /* 150% */
+  letter-spacing: -0.32px;
+}
