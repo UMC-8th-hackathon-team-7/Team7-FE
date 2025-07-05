@@ -21,31 +21,26 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-start gap-2 w-full px-4 py-3 rounded-[12px] backdrop-blur bg-[#F5F5F5]">
-      {/* 제목 */}
+    <div className="flex flex-col gap-1 w-full">
+      {/* 라벨 */}
       <label
-        className="text-[14px] font-medium leading-[20px] tracking-[-0.28px] text-content-additive"
+        className="text-[14px] font-medium text-content-additive tracking-[-0.28px] mb-1"
         style={{ fontFamily: 'var(--Family, "SUIT Variable")' }}
       >
         {label}
       </label>
 
-      {/* 입력 필드 */}
+      {/* 입력 영역 */}
+      <div className="w-full bg-[#F5F5F5] rounded-[12px] px-4 py-3">
         <textarea
           value={inputValue}
           onChange={handleChange}
           placeholder={placeholder}
-          className="w-full text-sm text-gray-800 bg-transparent border-none outline-none resize-none 
-                     font-medium tracking-[-0.28px]"
+          className="w-full text-[14px] font-medium text-gray-800 leading-[20px] tracking-[-0.28px] resize-none bg-transparent outline-none"
           rows={4}
-          style={{
-            background: "rgba(245, 245, 245, 0.9)", 
-            fontFamily: 'var(--Family, "SUIT Variable")',
-            fontSize: "14px",
-            lineHeight: "20px",
-            fontWeight: 500,
-          }}
+          style={{ fontFamily: 'var(--Family, "SUIT Variable")' }}
         />
+      </div>
     </div>
   );
 };

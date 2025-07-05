@@ -8,6 +8,7 @@ import { useUserStore } from "@/store/userStore";
 import { mockGuardian } from "./store/userStore";
 import MyActivity from "./pages/my_activity/MyActivity";
 import UseMileage from "./pages/my_activity/UseMileage";
+import LocationPage from "./pages/LocationPage";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "use-mileage",
         element: <UseMileage />,
+      },
+      {
+        path: "map",
+        element: <LocationPage />,
       },
     ],
   },
