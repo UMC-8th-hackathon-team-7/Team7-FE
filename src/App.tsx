@@ -44,6 +44,10 @@ const router = createBrowserRouter([
         path: "map",
         element: <LocationPage />,
       },
+      {
+        path: "chat",
+        element: <ChatPage />,
+      },
     ],
   },
   {
@@ -57,10 +61,6 @@ const router = createBrowserRouter([
       {
         path: "signup",
         element: <SignUpDefault />,
-      },
-      {
-        path: "chat",
-        element: <ChatPage />,
       },
       {
         path: "chat/:userId",

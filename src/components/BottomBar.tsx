@@ -1,4 +1,5 @@
 import { useContext, type Dispatch, type SetStateAction } from "react";
+import { useNavigate } from "react-router-dom";
 import BottomBarContext from "../contexts/BottomBarContext";
 
 import home from "../assets/bottom_bar/home/home.svg";
@@ -26,6 +27,7 @@ const BottomBar = () => {
         setPageMenu={setPageMenu}
         defaultSrc={home}
         filledSrc={homeFilled}
+        to="/"
       >
         홈
       </BottomBarBtn>
@@ -36,8 +38,9 @@ const BottomBar = () => {
         setPageMenu={setPageMenu}
         defaultSrc={document}
         filledSrc={documentFilled}
+        to="/board"
       >
-        문서
+        게시판
       </BottomBarBtn>
       <BottomBarBtn
         pageNum={2}
@@ -45,6 +48,7 @@ const BottomBar = () => {
         setPageMenu={setPageMenu}
         defaultSrc={map}
         filledSrc={mapFilled}
+        to="/map"
       >
         지도
       </BottomBarBtn>
@@ -54,6 +58,7 @@ const BottomBar = () => {
         setPageMenu={setPageMenu}
         defaultSrc={chat}
         filledSrc={chatFilled}
+        to="/chat"
       >
         채팅
       </BottomBarBtn>
@@ -63,6 +68,7 @@ const BottomBar = () => {
         setPageMenu={setPageMenu}
         defaultSrc={person}
         filledSrc={personFilled}
+        to="/my-activity"
       >
         내 정보
       </BottomBarBtn>
@@ -79,6 +85,7 @@ interface BottomBarBtnProps {
   setPageMenu: Dispatch<SetStateAction<number>>;
   defaultSrc: string;
   filledSrc: string;
+  to: string;
 }
 
 const BottomBarBtn = ({
@@ -88,11 +95,20 @@ const BottomBarBtn = ({
   setPageMenu,
   defaultSrc,
   filledSrc,
+  to,
 }: BottomBarBtnProps) => {
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    setPageMenu(pageNum);
+    navigate(to); // 경로 이동
+  };
+  
   return (
     <button
       className="flex flex-col items-center w-[75.4px] cursor-pointer"
-      onClick={() => setPageMenu(pageNum)}
+      onClick={handleClick}
     >
       <img src={pageMenu === pageNum ? filledSrc : defaultSrc} alt="" />
       <p className="text-footnote font-[400]">{children}</p>
