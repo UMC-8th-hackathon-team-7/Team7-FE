@@ -2,7 +2,17 @@ import { ProfileCard } from "./ProfileCard";
 import { SectionHeader } from "@/components/commons/SectionHeader";
 import { useUserStore } from "@/store/userStore";
 
-export const ProfileSection = () => {
+interface ProfileSectionProps {
+  selectable?: boolean;
+  selectedTargetName?: string | null;
+  onSelectToggle?: (name: string) => void;
+}
+
+export const ProfileSection: React.FC<ProfileSectionProps> = ({
+  selectable = false,
+  selectedTargetName,
+  onSelectToggle,
+}) => {
   const { currentUser } = useUserStore();
 
   if (!currentUser) {
@@ -19,12 +29,12 @@ export const ProfileSection = () => {
         type="guardian"
         imageUrl="/icons/guardian.png"
         name={currentUser.name}
-        age={49} // 필요 시 사용자 정보 확장
-        region="서울 마포구" // 필요 시 사용자 정보 확장
-        badge="5회차 도움"
+        age={currentUser.age}
+        region={currentUser.region}
+        badge={currentUser.badge}
       />
 
-      {/* 도움 대상자 섹션 */}
+      {/* 대상자 섹션 */}
       <div className="flex justify-center items-center px-2 py-3 gap-12 mt-[30px] mb-2 bg-gray-50 rounded-t-md">
         <SectionHeader title="도움이 필요한 프로필" />
       </div>
@@ -40,6 +50,9 @@ export const ProfileSection = () => {
           note={target.note}
           disabilityType={target.disabilityType}
           disabilityLevel={target.disabilityLevel}
+          selectable={selectable}
+          selected={selectedTargetName === target.name}
+          onSelectToggle={() => onSelectToggle?.(target.name)}
         />
       ))}
     </div>

@@ -12,6 +12,9 @@ interface TargetProfile {
 interface User {
   id: string;
   name: string;
+  age: number;
+  region: string;
+  badge: string;
   targetList: TargetProfile[];
 }
 
@@ -30,6 +33,9 @@ export const useUserStore = create<UserStore>((set) => ({
 export const mockGuardian = {
   id: "guardian-001",
   name: "이승민",
+  age: 49,
+  region: "서울 마포구",
+  badge: "5회차 도움",
   targetList: [
     {
       name: "이수성",
