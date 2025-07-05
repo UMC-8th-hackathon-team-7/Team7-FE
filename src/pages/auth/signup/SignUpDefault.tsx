@@ -3,7 +3,7 @@ import step1 from "../../../assets/auth/progress_bar/step1.svg";
 import step2 from "../../../assets/auth/progress_bar/step2.svg";
 import step3 from "../../../assets/auth/progress_bar/step3.svg";
 import step4 from "../../../assets/auth/progress_bar/step4.svg";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import SignUp from "./SignUp";
 import SignUp2 from "./SignUp2";
 import type { User } from "@/types/user";
@@ -11,6 +11,7 @@ import SignUp3 from "./SignUp3";
 import SignUp4 from "./SignUp4";
 import { axiosClient } from "@/apis/axiosClient";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "@/contexts/AuthContext";
 
 export interface BaseSignUpPayload {
   phoneNumber: string;
@@ -60,6 +61,7 @@ const SignUpDefault = () => {
     disabilitySeverity: 3,
   });
 
+  const { login } = useContext(AuthContext)!;
   const navigate = useNavigate();
 
   const handleNextStep = () => {
@@ -122,6 +124,10 @@ const SignUpDefault = () => {
 
       if (loginData.resultType === "SUCCESS") {
         alert(loginData.success!.message);
+        login(
+          loginData.success!.accessToken,
+          isGuardian ? "guardian" : "disabled"
+        );
         navigate("/board");
       } else {
         alert(loginData.error!.reason);

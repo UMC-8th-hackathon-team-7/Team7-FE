@@ -1,10 +1,5 @@
-// import Cookies from "js-cookie";
-import React, {
-  createContext,
-  useEffect,
-  useState,
-  type ReactNode,
-} from "react";
+import Cookies from "js-cookie";
+import React, { createContext, useState, type ReactNode } from "react";
 // import { useLocation } from "react-router-dom";
 
 // import axiosClient from "../services/api";
@@ -16,9 +11,8 @@ import React, {
 // AuthContext에서 사용할 인터페이스 정의
 export interface AuthContextType {
   isAuthenticated: boolean;
-  userNickname: string;
   userType: UserType;
-  login: (accessToken: string, userNickname: string) => void;
+  login: (accessToken: string, userType: UserType) => void;
   logout: () => void;
 }
 
@@ -32,18 +26,7 @@ export type UserType = "disabled" | "guardian";
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [userNickname, setUserNickname] = useState<string>(
-    () => localStorage.getItem("userNickname") || "username"
-  );
   const [userType, setUserType] = useState<UserType>("guardian");
-
-  // 더미용 - 삭제할 것
-  useEffect(() => {
-    setIsAuthenticated(true);
-    setUserNickname("username");
-    // 토글하면서 테스트
-    setUserType("guardian");
-  }, []);
 
   //   const location = useLocation();
 
@@ -52,20 +35,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   //     setIsAuthenticated(!!accessToken);
   //   }, [location]);
 
-  const login = () =>
-    // accessToken: string,
-    // userNickname: string,
-    {
-      // Cookies.set("accessToken", accessToken, {
-      //   expires: ACCESS_TOKEN_EXP_TIME,
-      //   secure: false,
-      //   sameSite: "Strict",
-    };
+  const login = (accessToken: string, userType: UserType) => {
+    Cookies.set("accessToken", accessToken, {
+      secure: false,
+      sameSite: "Strict",
+    });
 
-  //     setUserNickname(userNickname);
-  //     localStorage.setItem("userNickname", userNickname);
-  //     setIsAuthenticated(true);
-  //   };
+    setIsAuthenticated(true);
+    setUserType(userType);
+  };
 
   const logout = () => {
     //     Cookies.remove("accessToken");
@@ -106,9 +84,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   //   }, []);
 
   return (
-    <AuthContext.Provider
-      value={{ isAuthenticated, userNickname, userType, login, logout }}
-    >
+    <AuthContext.Provider value={{ isAuthenticated, userType, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
