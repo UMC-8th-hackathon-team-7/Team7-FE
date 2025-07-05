@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, type JSX } from "react";
 import CategoryBtn from "@/components/board/CategoryBtn";
-
 import BoardContent from "@/components/board/BoardContent";
 import ShoeIcon from "@/components/board/icons/ShoeIcon";
 import HumanIcon from "@/components/board/icons/HumanIcon";
@@ -12,12 +11,12 @@ import HumanIconWhite from "@/components/board/icons/HumanIconWhite";
 import SofaIconWhite from "@/components/board/icons/SofaIconWhite";
 import DumbbellIconWhite from "@/components/board/icons/DumbbellIconWhite";
 import HandIconWhite from "@/components/board/icons/HandIconWhite";
-
 import bell from "./../assets/board/ic_bell.svg";
 import openArrow from "./../assets/board/ic_open_arrow.svg";
 import search from "./../assets/board/ic_search.svg";
 import plus from "./../assets/board/ic_plus.svg";
 import clsx from "clsx";
+import { axiosClient } from "@/apis/axiosClient";
 
 type Category =
   | "전체"
@@ -27,53 +26,80 @@ type Category =
   | "취미 및 사회활동"
   | "소통 및 케어";
 
+// API 에서 내려주는 데이터 타입
+interface Post {
+  title: string;
+  place: string;
+  createdAt: string;
+  matchingCategory: {
+    categoryId: number;
+    name: Category;
+  };
+}
+
 const Board = () => {
   const [category, setCategory] = useState<Category>("전체");
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const sentinelRef = useRef<HTMLDivElement>(null);
-
-  // sticky 시 색상 변경
   const [isSticky, setIsSticky] = useState(false);
+
+  // 1) 카테고리 이름 → ID 매핑
+  const categoryMap: Record<Category, number> = {
+    전체: 0,
+    "외출 및 이동": 1,
+    "일상 생활": 2,
+    "주거 환경": 3,
+    "취미 및 사회활동": 4,
+    "소통 및 케어": 5,
+  };
+
+  // 2) 카테고리 변경 시 API 호출
+  useEffect(() => {
+    const fetchPosts = async () => {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const id = categoryMap[category];
+        // '전체'면 쿼리 없이 전체 조회 가정
+        const res = await axiosClient.get("/matching", {
+          params: {
+            category: id,
+          },
+        });
+        const json = await res.data;
+        setPosts(json.success);
+      } catch (err) {
+        // setError(err);
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchPosts();
+  }, [category]);
+
+  // 3) sticky 색상 변경 옵저버
   useEffect(() => {
     if (!sentinelRef.current) return;
-
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        // sentinel이 뷰포트에서 사라지면 sticky 발동
-        setIsSticky(entry.intersectionRatio < 1);
-      },
+      ([e]) => setIsSticky(e.intersectionRatio < 1),
       { threshold: [1] }
     );
-
     observer.observe(sentinelRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const items: {
-    id: number;
-    category: Category;
-    icon: JSX.Element;
-  }[] = [
-    { id: 1, category: "외출 및 이동", icon: <ShoeIcon /> },
-    { id: 2, category: "일상 생활", icon: <HumanIcon /> },
-    { id: 3, category: "주거 환경", icon: <SofaIcon /> },
-    { id: 4, category: "취미 및 사회활동", icon: <DumbbellIcon /> },
-    { id: 5, category: "소통 및 케어", icon: <HandIcon /> },
-    { id: 6, category: "외출 및 이동", icon: <ShoeIcon /> },
-    { id: 7, category: "일상 생활", icon: <HumanIcon /> },
-    { id: 8, category: "주거 환경", icon: <SofaIcon /> },
-    { id: 9, category: "취미 및 사회활동", icon: <DumbbellIcon /> },
-    { id: 10, category: "소통 및 케어", icon: <HandIcon /> },
-    { id: 11, category: "외출 및 이동", icon: <ShoeIcon /> },
-    { id: 12, category: "일상 생활", icon: <HumanIcon /> },
-    { id: 13, category: "주거 환경", icon: <SofaIcon /> },
-    { id: 14, category: "취미 및 사회활동", icon: <DumbbellIcon /> },
-    { id: 15, category: "소통 및 케어", icon: <HandIcon /> },
-  ];
-
-  const filtered = items.filter(
-    (item) => category === "전체" || item.category === category
-  );
+  // 4) API 데이터 렌더링용 아이콘 맵
+  const iconMap: Record<number, JSX.Element> = {
+    1: <ShoeIcon />,
+    2: <HumanIcon />,
+    3: <SofaIcon />,
+    4: <DumbbellIcon />,
+    5: <HandIcon />,
+  };
 
   return (
     <main
@@ -91,35 +117,27 @@ const Board = () => {
         <div className="flex items-center gap-[6px]">
           <h3 className="text-title font-[700]">공덕역</h3>
           <button>
-            <img className="size-[24px]" src={openArrow} alt="" />
+            <img className="size-[24px]" src={openArrow} alt="열기" />
           </button>
         </div>
         <div className="flex items-center gap-[16px]">
-          <button className="flex items-center">
-            <img src={bell} alt="" />
+          <button>
+            <img src={bell} alt="알림" />
           </button>
           <button>
-            <img src={search} alt="" />
+            <img src={search} alt="검색" />
           </button>
         </div>
       </section>
 
       <section className="flex flex-wrap gap-[8px] px-[16px] py-[10px]">
-        {(
-          [
-            "전체",
-            "외출 및 이동",
-            "일상 생활",
-            "주거 환경",
-            "취미 및 사회활동",
-            "소통 및 케어",
-          ] as Category[]
-        ).map((c) => (
+        {(Object.keys(categoryMap) as Category[]).map((c) => (
           <CategoryBtn
             key={c}
             active={category === c}
             onClick={() => setCategory(c)}
           >
+            {/* 아이콘 토글 (선택된 경우 White 아이콘) */}
             {c === "외출 및 이동" ? (
               category === c ? (
                 <ShoeIconWhite />
@@ -156,11 +174,21 @@ const Board = () => {
         ))}
       </section>
 
-      {/* render only filtered items */}
+      {/* 5) API 데이터로 렌더링 */}
       <section className="flex flex-col gap-[20px] p-[16px]">
-        {filtered.map(({ id, icon }) => (
-          <BoardContent key={id} icon={icon} />
-        ))}
+        {isLoading && <p>로딩 중...</p>}
+        {error && <p className="text-red-500">에러: {error}</p>}
+        {!isLoading &&
+          !error &&
+          posts.map((post) => (
+            <BoardContent
+              key={`${post.title}-${post.createdAt}`}
+              icon={iconMap[post.matchingCategory.categoryId]}
+              title={post.title}
+              place={post.place}
+              category={post.matchingCategory.name}
+            />
+          ))}
       </section>
 
       <div className="flex justify-end">
