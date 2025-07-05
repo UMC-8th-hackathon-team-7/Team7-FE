@@ -6,7 +6,9 @@ export const fontSize = {
     subhead: "18px",
     body: "16px",
     small: "14px",
+    callout: "14px",
     footnote: "12px",
+    caption: "10px",
   };
   
   export const lineHeight = {
@@ -16,7 +18,9 @@ export const fontSize = {
     subhead: "26px",
     body: "24px",
     small: "24px",
+    callout: "20px",
     footnote: "18px",
+    caption: "14px",
   };
   
   export const letterSpacing = {
@@ -28,6 +32,7 @@ export const fontSize = {
     small: "-0.42px",
     callout: "-0.28px",
     footnote: "-0.24px",
+    caption: "-0.2px",
   };
   
   export const font = {
