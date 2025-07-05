@@ -124,6 +124,7 @@ const SignUpDefault = () => {
 
       if (loginData.resultType === "SUCCESS") {
         alert(loginData.success!.message);
+        console.log(isGuardian);
         login(
           loginData.success!.accessToken,
           isGuardian ? "guardian" : "disabled"
