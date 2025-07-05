@@ -28,8 +28,9 @@ const HelpViewPage = () => {
 
   return (
     <div className="w-full max-w-md mx-auto px-4 py-6 flex flex-col gap-6 bg-white min-h-screen">
+        <div className="mt-[54px]">
         <Header title="도움 보기" />
-
+        </div>
         {/* 도움 요청 정보 카드 */}
         <HelpInfoCard {...helpData} />
 

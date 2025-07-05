@@ -4,7 +4,7 @@ import { SectionHeader } from "@/components/commons/SectionHeader";
 export const ProfileSection = () => (
   <div className="w-full">
     {/* 보호자 섹션 */}
-    <div className="flex justify-center items-center px-2 py-3 gap-12 mb-2 bg-gray-50 rounded-t-md">
+    <div className="flex justify-center items-center px-2 py-3 gap-12 mb-20 bg-gray-50 rounded-t-md">
       <SectionHeader title="보호자 프로필" />
     </div>
     <ProfileCard
@@ -17,7 +17,7 @@ export const ProfileSection = () => (
     />
 
     {/* 도움 대상자 섹션 */}
-    <div className="flex justify-center items-center px-2 py-3 gap-12 mt-6 mb-2 bg-gray-50 rounded-t-md">
+    <div className="flex justify-center items-center px-2 py-3 gap-12 mt-[30px] mb-2 bg-gray-50 rounded-t-md">
        <SectionHeader title="도움이 필요한 프로필" />
     </div>
     <ProfileCard

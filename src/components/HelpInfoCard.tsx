@@ -34,7 +34,7 @@ export const HelpInfoCard: React.FC<HelpInfoCardProps> = ({
       </p>
 
       {/* 정보 항목 */}
-      <div className="flex flex-col justify-center items-start px-4 py-3 gap-2 w-full bg-white rounded-md mt-4 shadow-sm">
+      <div className="flex flex-col px-4 py-3 space-y-2 w-full bg-white rounded-md mt-[10px] mb-[10px] shadow-sm">
         <InfoItem icon="category.svg" label="분류" value={category} />
         <InfoItem icon="location_on.svg" label="장소" value={location} />
         <InfoItem icon="calendar_clock.svg" label="일시" value={time} />
