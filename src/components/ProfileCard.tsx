@@ -72,12 +72,27 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
 
   {/* ✅ 추가 정보는 텍스트 영역 바깥에 위치, 패딩으로 정렬 맞춤 */}
   {type === "target" && (
-    <div className="mt-[8px] flex flex-col gap-1">
-      {note && <p className="text-[12px] text-gray-700">특이사항 {note}</p>}
-      {disabilityType && <p className="text-[12px] text-gray-700">장애 부위 {disabilityType}</p>}
-      {disabilityLevel && <p className="text-[12px] text-gray-700">장애 정도 {disabilityLevel}</p>}
-    </div>
-  )}
+  <div className="mt-[12px] flex flex-col gap-3">
+    {note && (
+      <p className="text-[12px] text-gray-700">
+        <span className="mr-[25px] font-medium text-gray-600">특이사항</span>
+        {note}
+      </p>
+    )}
+    {disabilityType && (
+      <p className="text-[12px] text-gray-700">
+        <span className="mr-[25px] font-medium text-gray-600">장애 부위</span>
+        {disabilityType}
+      </p>
+    )}
+    {disabilityLevel && (
+      <p className="text-[12px] text-gray-700">
+        <span className="mr-[25px] font-medium text-gray-600">장애 정도</span>
+        {disabilityLevel}
+      </p>
+    )}
+  </div>
+)}
 </div>
   );
 };
