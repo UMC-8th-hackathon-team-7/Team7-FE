@@ -3,30 +3,36 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import ChatInput from "./ChatInput";
 import { theme } from "../../styles/theme";
+import Profile from "./Profile";
+import ProfileAccepted from "./ProfileAccepted";
+import OtherUserProfile from "./OtherUserProfile";
 
 const clientId = uuidv4();
+
+type ChatMessage =
+  | { clientId: string; text: string; type?: undefined }
+  | { clientId: string; type: "profile" }
+  | { clientId: string; type: "profileAccepted" };
 
 const ChatSection = () => {
   const [input, setInput] = useState<string>("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [socket, setSocket] = useState<WebSocket | null>(null);
-  const [messages, setMessages] = useState<
-    { clientId: string; text: string }[]
-  >([]);
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
 
   useEffect(() => {
     const ws = new WebSocket("ws://localhost:8080");
     setSocket(ws);
-
+  
     ws.onmessage = (event) => {
       const messageData = JSON.parse(event.data);
       setMessages((prevMessages) => [...prevMessages, messageData]);
     };
-
+  
     return () => {
       ws.close();
     };
-  }, []);
+  }, []);  
 
   const sendMessage = () => {
     if (socket && input) {
@@ -34,6 +40,34 @@ const ChatSection = () => {
       socket.send(JSON.stringify(message));
       setInput("");
     }
+  };
+
+  const sendProfileMessage = () => {
+    if (socket) {
+      const message = {
+        clientId,
+        type: "profile",
+        // 필요하다면 추가 데이터도 넣기 가능
+        acceptedAt: Date.now(),
+        note: "도움 수락 후 다시 보냄",
+      };
+      socket.send(JSON.stringify(message));
+    }
+  };  
+
+  const sendProfileAcceptedMessage = () => {
+    if (socket) {
+      const message = {
+        clientId,
+        type: "profileAccepted",
+        // 추가 데이터가 있으면 넣어도 됨
+      };
+      socket.send(JSON.stringify(message));
+    }
+  };
+
+  const handleAccept = () => {
+    sendProfileAcceptedMessage();
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -63,6 +97,19 @@ const ChatSection = () => {
       <ChatBox ref={chatBoxRef}>
         {messages.map((msg, index) => {
           const isMyMessage = msg.clientId === clientId;
+
+          if (msg.type === "profile") {
+            return <Profile key={index} isMyMessage={isMyMessage} onAccept={handleAccept} sendProfileAcceptedMessage={sendProfileAcceptedMessage} />;
+          }
+        
+          if (msg.type === "profileAccepted") {
+            return isMyMessage ? (
+              <ProfileAccepted key={index} isMyMessage={isMyMessage} />
+            ) : (
+              <OtherUserProfile key={index} isMyMessage={isMyMessage} />
+            );
+          }          
+
           return (
             <MessageWrapper key={index} isMyMessage={isMyMessage}>
               {isMyMessage ? (
@@ -87,6 +134,7 @@ const ChatSection = () => {
         inputRef={inputRef}
         handleKeyPress={handleKeyPress}
         sendMessage={sendMessage}
+        sendProfileMessage={sendProfileMessage}
       />
     </Container>
   );

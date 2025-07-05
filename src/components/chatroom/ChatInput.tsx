@@ -9,6 +9,7 @@ interface ChatInputProps {
   inputRef: RefObject<HTMLInputElement | null>;
   handleKeyPress: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   sendMessage: () => void;
+  sendProfileMessage: () => void;
 }
 
 const ChatInput = ({
@@ -17,6 +18,7 @@ const ChatInput = ({
   inputRef,
   handleKeyPress,
   sendMessage,
+  sendProfileMessage,
 }: ChatInputProps) => {
 
   const handleDeleteClick = () => {
@@ -26,7 +28,12 @@ const ChatInput = ({
 
   return (
     <InputContainer>
-        <img src="/icons/profile.svg" alt="profile" />
+        <img 
+          src="/icons/profile.svg" 
+          alt="profile" 
+          style={{ cursor: "pointer" }} 
+          onClick={sendProfileMessage} 
+        />
 
         <InputWrapper>
             <InputField
