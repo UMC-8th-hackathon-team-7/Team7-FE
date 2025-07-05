@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState, type JSX } from "react";
 import CategoryBtn from "@/components/board/CategoryBtn";
 
 import BoardContent from "@/components/board/BoardContent";
@@ -17,6 +17,7 @@ import bell from "./../assets/board/ic_bell.svg";
 import openArrow from "./../assets/board/ic_open_arrow.svg";
 import search from "./../assets/board/ic_search.svg";
 import plus from "./../assets/board/ic_plus.svg";
+import clsx from "clsx";
 
 type Category =
   | "전체"
@@ -29,9 +30,64 @@ type Category =
 const Board = () => {
   const [category, setCategory] = useState<Category>("전체");
 
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
+  // sticky 시 색상 변경
+  const [isSticky, setIsSticky] = useState(false);
+  useEffect(() => {
+    if (!sentinelRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // sentinel이 뷰포트에서 사라지면 sticky 발동
+        setIsSticky(entry.intersectionRatio < 1);
+      },
+      { threshold: [1] }
+    );
+
+    observer.observe(sentinelRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const items: {
+    id: number;
+    category: Category;
+    icon: JSX.Element;
+  }[] = [
+    { id: 1, category: "외출 및 이동", icon: <ShoeIcon /> },
+    { id: 2, category: "일상 생활", icon: <HumanIcon /> },
+    { id: 3, category: "주거 환경", icon: <SofaIcon /> },
+    { id: 4, category: "취미 및 사회활동", icon: <DumbbellIcon /> },
+    { id: 5, category: "소통 및 케어", icon: <HandIcon /> },
+    { id: 6, category: "외출 및 이동", icon: <ShoeIcon /> },
+    { id: 7, category: "일상 생활", icon: <HumanIcon /> },
+    { id: 8, category: "주거 환경", icon: <SofaIcon /> },
+    { id: 9, category: "취미 및 사회활동", icon: <DumbbellIcon /> },
+    { id: 10, category: "소통 및 케어", icon: <HandIcon /> },
+    { id: 11, category: "외출 및 이동", icon: <ShoeIcon /> },
+    { id: 12, category: "일상 생활", icon: <HumanIcon /> },
+    { id: 13, category: "주거 환경", icon: <SofaIcon /> },
+    { id: 14, category: "취미 및 사회활동", icon: <DumbbellIcon /> },
+    { id: 15, category: "소통 및 케어", icon: <HandIcon /> },
+  ];
+
+  const filtered = items.filter(
+    (item) => category === "전체" || item.category === category
+  );
+
   return (
-    <main className="flex-1 overflow-y-auto mx-auto w-full bg-[var(--color-root-strong)] relative">
-      <section className="flex justify-between sticky top-[0px] px-[16px] py-[12px] w-full bg-[var(--color-root-strong)] z-10">
+    <main
+      className="flex-1 overflow-y-auto mx-auto w-full bg-[var(--color-root-strong)] relative"
+      style={{ scrollbarGutter: "stable" }}
+    >
+      <div ref={sentinelRef} className="h-0" />
+
+      <section
+        className={clsx(
+          "flex justify-between sticky top-[0px] px-[16px] py-[12px] w-full z-10 transition-colors duration-200",
+          isSticky ? "bg-[#fff]" : "bg-[var(--color-root-strong)]"
+        )}
+      >
         <div className="flex items-center gap-[6px]">
           <h3 className="text-title font-[700]">공덕역</h3>
           <button>
@@ -49,71 +105,62 @@ const Board = () => {
       </section>
 
       <section className="flex flex-wrap gap-[8px] px-[16px] py-[10px]">
-        <CategoryBtn
-          active={category === "전체"}
-          onClick={() => setCategory("전체")}
-        >
-          전체
-        </CategoryBtn>
-        <CategoryBtn
-          active={category === "외출 및 이동"}
-          onClick={() => setCategory("외출 및 이동")}
-        >
-          {category === "외출 및 이동" ? <ShoeIconWhite /> : <ShoeIcon />}
-          외출 및 이동
-        </CategoryBtn>
-        <CategoryBtn
-          active={category === "일상 생활"}
-          onClick={() => setCategory("일상 생활")}
-        >
-          {category === "일상 생활" ? <HumanIconWhite /> : <HumanIcon />}
-          일상 생활
-        </CategoryBtn>
-        <CategoryBtn
-          active={category === "주거 환경"}
-          onClick={() => setCategory("주거 환경")}
-        >
-          {category === "주거 환경" ? <SofaIconWhite /> : <SofaIcon />}
-          주거 환경
-        </CategoryBtn>
-        <CategoryBtn
-          active={category === "취미 및 사회활동"}
-          onClick={() => setCategory("취미 및 사회활동")}
-        >
-          {category === "취미 및 사회활동" ? (
-            <DumbbellIconWhite />
-          ) : (
-            <DumbbellIcon />
-          )}
-          취미 및 사회활동
-        </CategoryBtn>
-        <CategoryBtn
-          active={category === "소통 및 케어"}
-          onClick={() => setCategory("소통 및 케어")}
-        >
-          {category === "소통 및 케어" ? <HandIconWhite /> : <HandIcon />}
-          소통 및 케어
-        </CategoryBtn>
+        {(
+          [
+            "전체",
+            "외출 및 이동",
+            "일상 생활",
+            "주거 환경",
+            "취미 및 사회활동",
+            "소통 및 케어",
+          ] as Category[]
+        ).map((c) => (
+          <CategoryBtn
+            key={c}
+            active={category === c}
+            onClick={() => setCategory(c)}
+          >
+            {c === "외출 및 이동" ? (
+              category === c ? (
+                <ShoeIconWhite />
+              ) : (
+                <ShoeIcon />
+              )
+            ) : c === "일상 생활" ? (
+              category === c ? (
+                <HumanIconWhite />
+              ) : (
+                <HumanIcon />
+              )
+            ) : c === "주거 환경" ? (
+              category === c ? (
+                <SofaIconWhite />
+              ) : (
+                <SofaIcon />
+              )
+            ) : c === "취미 및 사회활동" ? (
+              category === c ? (
+                <DumbbellIconWhite />
+              ) : (
+                <DumbbellIcon />
+              )
+            ) : c === "소통 및 케어" ? (
+              category === c ? (
+                <HandIconWhite />
+              ) : (
+                <HandIcon />
+              )
+            ) : null}
+            {c}
+          </CategoryBtn>
+        ))}
       </section>
 
+      {/* render only filtered items */}
       <section className="flex flex-col gap-[20px] p-[16px]">
-        <BoardContent icon={<ShoeIcon />} />
-        <BoardContent icon={<HumanIcon />} />
-        <BoardContent icon={<SofaIcon />} />
-        <BoardContent icon={<DumbbellIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
+        {filtered.map(({ id, icon }) => (
+          <BoardContent key={id} icon={icon} />
+        ))}
       </section>
 
       <div className="flex justify-end">
