@@ -30,8 +30,8 @@ const Board = () => {
   const [category, setCategory] = useState<Category>("전체");
 
   return (
-    <main className="mx-auto w-full min-h-screen bg-[var(--color-root-strong)] relative">
-      <section className="flex justify-between px-[16px] py-[12px] w-full">
+    <main className="flex-1 overflow-y-auto mx-auto w-full bg-[var(--color-root-strong)] relative">
+      <section className="flex justify-between sticky top-[0px] px-[16px] py-[12px] w-full bg-[var(--color-root-strong)] z-10">
         <div className="flex items-center gap-[6px]">
           <h3 className="text-title font-[700]">공덕역</h3>
           <button>
@@ -101,6 +101,18 @@ const Board = () => {
         <BoardContent icon={<HumanIcon />} />
         <BoardContent icon={<SofaIcon />} />
         <BoardContent icon={<DumbbellIcon />} />
+        <BoardContent icon={<HandIcon />} />
+        <BoardContent icon={<HandIcon />} />
+        <BoardContent icon={<HandIcon />} />
+        <BoardContent icon={<HandIcon />} />
+        <BoardContent icon={<HandIcon />} />
+        <BoardContent icon={<HandIcon />} />
+        <BoardContent icon={<HandIcon />} />
+        <BoardContent icon={<HandIcon />} />
+        <BoardContent icon={<HandIcon />} />
+        <BoardContent icon={<HandIcon />} />
+        <BoardContent icon={<HandIcon />} />
+        <BoardContent icon={<HandIcon />} />
         <BoardContent icon={<HandIcon />} />
       </section>
 
