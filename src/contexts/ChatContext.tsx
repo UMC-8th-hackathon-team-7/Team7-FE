@@ -11,7 +11,7 @@ export interface ChatItem {
 export const chatItems: ChatItem[] = [
     {
         id: "1234",
-        profile: "https://randomuser.me/api/portraits/women/68.jpg",
+        profile: "/icons/guardian.png",
         title: "안녕하세요, 문의드립니다",
         name: "홍길동",
         message: "어제 문의하신 내용에 대해 답변드립니다.",
