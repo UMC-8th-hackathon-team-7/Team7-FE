@@ -5,7 +5,16 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <DefaultLayout />,
-    children: [],
+    children: [
+      {
+        path: "/",
+        element: (
+          <div className="text-[var(--color-fill-inverted)]">
+            faasdffasdadsf
+          </div>
+        ),
+      },
+    ],
   },
 ]);
 

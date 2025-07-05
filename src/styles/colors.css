@@ -1,0 +1,31 @@
+:root {
+  --color-root-regular: #fff; /* 라이트 모드 색상 */
+  --color-root-strong: #f2f4f7;
+  --color-fill-regular: rgba(146, 157, 173, 0.92);
+  --color-fill-strong: rgba(146, 157, 173, 0.88);
+  --color-fill-static: #fff;
+  --color-fill-interactive: rgba(255, 255, 255, 0.8);
+  --color-fill-inverted: #111214;
+
+  --color-base: #1d2633;
+  --color-additive: rgba(29, 38, 51, 0.8);
+  --color-assistive: rgba(29, 38, 51, 0.6);
+  --color-disabled: rgba(29, 38, 51, 0.4);
+  --color-inverted: rgba(146, 157, 173);
+  --color-elevated: #fff;
+}
+.dark {
+  --color-root-regular: #101112; /* 다크 모드 색상 */
+  --color-root-strong: #0b0c0d;
+  --color-fill-regular: rgba(235, 238, 242, 0.08);
+  --color-fill-strong: rgba(235, 238, 242, 0.04);
+  --color-fill-static: #101112;
+  --color-fill-interactive: rgba(235, 238, 242, 0.04);
+  --color-fill-inverted: #ebeef2;
+
+  --color-base: #ebeef2;
+  --color-additive: rgba(235, 238, 242, 0.8);
+  --color-assistive: rgba(235, 238, 242, 0.6);
+  --color-disabled: rgba(235, 238, 242, 0.4);
+  --color-inverted: #1d2633;
+}
