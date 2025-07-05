@@ -1,16 +1,15 @@
 import { ProfileCard } from "./ProfileCard";
+import { SectionHeader } from "@/components/commons/SectionHeader";
 
 export const ProfileSection = () => (
   <div className="w-full">
     {/* 보호자 섹션 */}
     <div className="flex justify-center items-center px-2 py-3 gap-12 mb-2 bg-gray-50 rounded-t-md">
-      <h2 className="text-[14px] font-medium text-content-base leading-[20px] tracking-[-0.3px]">
-        보호자 프로필
-      </h2>
+      <SectionHeader title="보호자 프로필" />
     </div>
     <ProfileCard
       type="guardian"
-      imageUrl="/guardian.jpg"
+      imageUrl="/icons/guardian.png"
       name="이승민"
       age={49}
       region="서울 마포구"
@@ -19,13 +18,11 @@ export const ProfileSection = () => (
 
     {/* 도움 대상자 섹션 */}
     <div className="flex justify-center items-center px-2 py-3 gap-12 mt-6 mb-2 bg-gray-50 rounded-t-md">
-      <h2 className="text-[14px] font-medium text-content-base leading-[20px] tracking-[-0.3px]">
-        도움이 필요한 프로필
-      </h2>
+       <SectionHeader title="도움이 필요한 프로필" />
     </div>
     <ProfileCard
       type="target"
-      imageUrl="/user.jpg"
+      imageUrl="/icons/target.png"
       name="이수성"
       age={20}
       region="서울 마포구"
