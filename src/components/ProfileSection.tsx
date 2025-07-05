@@ -39,22 +39,24 @@ export const ProfileSection: React.FC<ProfileSectionProps> = ({
         <SectionHeader title="도움이 필요한 프로필" />
       </div>
 
-      {currentUser.targetList.map((target) => (
-        <ProfileCard
-          key={target.name}
-          type="target"
-          imageUrl="/icons/target.png"
-          name={target.name}
-          age={target.age}
-          region={target.region}
-          note={target.note}
-          disabilityType={target.disabilityType}
-          disabilityLevel={target.disabilityLevel}
-          selectable={selectable}
-          selected={selectedTargetName === target.name}
-          onSelectToggle={() => onSelectToggle?.(target.name)}
-        />
-      ))}
+      {currentUser.targetList
+  .filter(target => !selectedTargetName || target.name === selectedTargetName)
+  .map((target) => (
+    <ProfileCard
+      key={target.name}
+      type="target"
+      imageUrl="/icons/target.png"
+      name={target.name}
+      age={target.age}
+      region={target.region}
+      note={target.note}
+      disabilityType={target.disabilityType}
+      disabilityLevel={target.disabilityLevel}
+      selectable={selectable}
+      selected={selectedTargetName === target.name}
+      onSelectToggle={() => onSelectToggle?.(target.name)}
+    />
+))}
     </div>
   );
 };

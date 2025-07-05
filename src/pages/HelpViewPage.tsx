@@ -20,7 +20,9 @@ const HelpViewPage = () => {
         <HelpInfoCard {...helpData} />
 
       {/* 프로필 섹션 (보호자 + 도움 대상자) */}
-      <ProfileSection />
+      <ProfileSection
+  selectedTargetName={helpData.targetProfile.name}
+/>
 
       <Button text="채팅하기" onClick={() => console.log("clicked")} />
 
