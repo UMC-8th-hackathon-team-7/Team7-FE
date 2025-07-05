@@ -8,8 +8,24 @@ import HumanIcon from "@/components/board/icons/HumanIcon";
 import SofaIcon from "@/components/board/icons/SofaIcon";
 import DumbbellIcon from "@/components/board/icons/DumbbellIcon";
 import HandIcon from "@/components/board/icons/HandIcon";
+import { useState } from "react";
+import ShoeIconWhite from "@/components/board/icons/ShoeIconWhite";
+import HumanIconWhite from "@/components/board/icons/HumanIconWhite";
+import SofaIconWhite from "@/components/board/icons/SofaIconWhite";
+import DumbbellIconWhite from "@/components/board/icons/DumbbellIconWhite";
+import HandIconWhite from "@/components/board/icons/HandIconWhite";
+
+type Category =
+  | "전체"
+  | "외출 및 이동"
+  | "일상 생활"
+  | "주거 환경"
+  | "취미 및 사회활동"
+  | "소통 및 케어";
 
 const Board = () => {
+  const [category, setCategory] = useState<Category>("전체");
+
   return (
     <main className="mx-auto w-full min-h-screen bg-[var(--color-root-strong)]">
       <section className="flex justify-between px-[16px] py-[12px] w-full">
@@ -30,25 +46,49 @@ const Board = () => {
       </section>
 
       <section className="flex flex-wrap gap-[8px] px-[16px] py-[10px]">
-        <CategoryBtn active={true}>전체</CategoryBtn>
-        <CategoryBtn>
-          <ShoeIcon />
+        <CategoryBtn
+          active={category === "전체"}
+          onClick={() => setCategory("전체")}
+        >
+          전체
+        </CategoryBtn>
+        <CategoryBtn
+          active={category === "외출 및 이동"}
+          onClick={() => setCategory("외출 및 이동")}
+        >
+          {category === "외출 및 이동" ? <ShoeIconWhite /> : <ShoeIcon />}
           외출 및 이동
         </CategoryBtn>
-        <CategoryBtn>
-          <HumanIcon />
+        <CategoryBtn
+          active={category === "일상 생활"}
+          onClick={() => setCategory("일상 생활")}
+        >
+          {category === "일상 생활" ? <HumanIconWhite /> : <HumanIcon />}
           일상 생활
         </CategoryBtn>
-        <CategoryBtn>
-          <SofaIcon />
+        <CategoryBtn
+          active={category === "주거 환경"}
+          onClick={() => setCategory("주거 환경")}
+        >
+          {category === "주거 환경" ? <SofaIconWhite /> : <SofaIcon />}
           주거 환경
         </CategoryBtn>
-        <CategoryBtn>
-          <DumbbellIcon />
+        <CategoryBtn
+          active={category === "취미 및 사회활동"}
+          onClick={() => setCategory("취미 및 사회활동")}
+        >
+          {category === "취미 및 사회활동" ? (
+            <DumbbellIconWhite />
+          ) : (
+            <DumbbellIcon />
+          )}
           취미 및 사회활동
         </CategoryBtn>
-        <CategoryBtn>
-          <HandIcon />
+        <CategoryBtn
+          active={category === "소통 및 케어"}
+          onClick={() => setCategory("소통 및 케어")}
+        >
+          {category === "소통 및 케어" ? <HandIconWhite /> : <HandIcon />}
           소통 및 케어
         </CategoryBtn>
       </section>
