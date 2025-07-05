@@ -22,7 +22,7 @@ const HelpAskPage = () => {
   setSelectedTarget(prev => (prev === name ? null : name));
 };
     return (
-        <div className="w-full max-w-md mx-auto px-4 py-6 flex flex-col gap-6 bg-white h-screen overflow-y-auto">
+        <div className="w-full max-w-md mx-auto px-4 py-6 flex flex-col gap-6 bg-white h-screen overflow-y-auto pb-[100px]">
             <Header title="도움 요청" />
             <SectionHeader title="분류" subtitle="하나만 선택해주세요"/>
             <div className="flex flex-wrap gap-2">
@@ -87,6 +87,20 @@ const HelpAskPage = () => {
   selectable
   selected={selectedTarget === "김영희"}
   onSelectToggle={() => handleTargetToggle("김영희")}
+/>
+
+<ProfileCard
+  type="target"
+  imageUrl="/icons/target.png"
+  name="김뭐뭐"
+  age={22}
+  region="서울 강북구"
+  note="왼손을 쓰기 어려워요"
+  disabilityType="좌측 상지"
+  disabilityLevel={4}
+  selectable
+  selected={selectedTarget === "김뭐뭐"}
+  onSelectToggle={() => handleTargetToggle("김뭐뭐")}
 />
 
             <Button text="채팅하기" onClick={() => console.log("clicked")} />
