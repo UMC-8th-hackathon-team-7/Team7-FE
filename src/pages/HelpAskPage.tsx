@@ -92,7 +92,7 @@ const handleSubmit = () => {
         <div className="w-full max-w-md mx-auto px-4 py-6 flex flex-col gap-6 bg-white h-screen overflow-y-auto pb-[100px]">
             <Header title="도움 요청" />
             <SectionHeader title="분류" subtitle="하나만 선택해주세요"/>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-[8px]">
   {categories.map(({ key, label, icon }) => (
     <CategoryBtn
       key={key}

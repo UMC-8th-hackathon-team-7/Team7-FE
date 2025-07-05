@@ -52,7 +52,7 @@ export const ProfileCard: React.FC<ProfileCardProps> = ({
           </p>
 
           {/* 이름 + 뱃지/선택버튼 */}
-          <div className="flex items-center gap-[50px]">
+          <div className="flex items-center justify-between">
             <p
               className="text-[18px] text-content-base font-medium leading-[26px] tracking-[-0.36px]"
               style={{ fontFamily: 'var(--Family, "SUIT Variable")' }}
