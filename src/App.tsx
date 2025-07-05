@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout";
+import Board from "./pages/Board";
 
 const router = createBrowserRouter([
   {
@@ -7,12 +8,8 @@ const router = createBrowserRouter([
     element: <DefaultLayout />,
     children: [
       {
-        path: "/",
-        element: (
-          <div className="text-[var(--color-fill-inverted)]">
-            faasdffasdadsf
-          </div>
-        ),
+        path: "board",
+        element: <Board />,
       },
     ],
   },
