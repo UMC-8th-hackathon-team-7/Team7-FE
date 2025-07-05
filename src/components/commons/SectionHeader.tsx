@@ -10,11 +10,13 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
   subtitle,
 }) => {
   return (
-    <div className="flex items-center justify-between gap-2 flex-[1_0_0] w-full">
+    <div className="flex items-center justify-between gap-2 flex-[1_0_0] w-full"
+      style={{ paddingLeft: "16px", paddingRight: "16px" }}
+    >
       {/* 제목 */}
       <h2
         className="text-[18px] font-medium leading-[26px] tracking-[-0.36px] text-content-base"
-        style={{ fontFamily: 'var(--Family, "SUIT Variable")' }}
+        style={{ fontFamily: 'var(--Family, "SUIT Variable")', marginTop: "20px" }}
       >
         {title}
       </h2>

@@ -21,17 +21,17 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <div className="flex flex-col gap-1 w-full">
+    <div className="flex flex-col gap-1 w-full" >
       {/* 라벨 */}
       <label
         className="text-[14px] font-medium text-content-additive tracking-[-0.28px] mb-1"
-        style={{ fontFamily: 'var(--Family, "SUIT Variable")' }}
+        style={{ fontFamily: 'var(--Family, "SUIT Variable")', paddingLeft: "16px", paddingRight: "16px", marginTop: "2px" }}
       >
         {label}
       </label>
 
       {/* 입력 영역 */}
-      <div className="w-full bg-[#F5F5F5] rounded-[12px] px-4 py-3">
+      <div className="w-full bg-[#F5F5F5] rounded-[12px] px-4 py-3" style={{paddingLeft: "16px", paddingRight: "16px", paddingTop: "16px"}}>
         <textarea
           value={inputValue}
           onChange={handleChange}
