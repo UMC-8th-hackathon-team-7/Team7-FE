@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type JSX } from "react";
 import CategoryBtn from "@/components/board/CategoryBtn";
 
 import BoardContent from "@/components/board/BoardContent";
@@ -49,6 +49,32 @@ const Board = () => {
     return () => observer.disconnect();
   }, []);
 
+  const items: {
+    id: number;
+    category: Category;
+    icon: JSX.Element;
+  }[] = [
+    { id: 1, category: "외출 및 이동", icon: <ShoeIcon /> },
+    { id: 2, category: "일상 생활", icon: <HumanIcon /> },
+    { id: 3, category: "주거 환경", icon: <SofaIcon /> },
+    { id: 4, category: "취미 및 사회활동", icon: <DumbbellIcon /> },
+    { id: 5, category: "소통 및 케어", icon: <HandIcon /> },
+    { id: 6, category: "외출 및 이동", icon: <ShoeIcon /> },
+    { id: 7, category: "일상 생활", icon: <HumanIcon /> },
+    { id: 8, category: "주거 환경", icon: <SofaIcon /> },
+    { id: 9, category: "취미 및 사회활동", icon: <DumbbellIcon /> },
+    { id: 10, category: "소통 및 케어", icon: <HandIcon /> },
+    { id: 11, category: "외출 및 이동", icon: <ShoeIcon /> },
+    { id: 12, category: "일상 생활", icon: <HumanIcon /> },
+    { id: 13, category: "주거 환경", icon: <SofaIcon /> },
+    { id: 14, category: "취미 및 사회활동", icon: <DumbbellIcon /> },
+    { id: 15, category: "소통 및 케어", icon: <HandIcon /> },
+  ];
+
+  const filtered = items.filter(
+    (item) => category === "전체" || item.category === category
+  );
+
   return (
     <main className="flex-1 overflow-y-auto mx-auto w-full bg-[var(--color-root-strong)] relative">
       <div ref={sentinelRef} className="h-0" />
@@ -76,71 +102,62 @@ const Board = () => {
       </section>
 
       <section className="flex flex-wrap gap-[8px] px-[16px] py-[10px]">
-        <CategoryBtn
-          active={category === "전체"}
-          onClick={() => setCategory("전체")}
-        >
-          전체
-        </CategoryBtn>
-        <CategoryBtn
-          active={category === "외출 및 이동"}
-          onClick={() => setCategory("외출 및 이동")}
-        >
-          {category === "외출 및 이동" ? <ShoeIconWhite /> : <ShoeIcon />}
-          외출 및 이동
-        </CategoryBtn>
-        <CategoryBtn
-          active={category === "일상 생활"}
-          onClick={() => setCategory("일상 생활")}
-        >
-          {category === "일상 생활" ? <HumanIconWhite /> : <HumanIcon />}
-          일상 생활
-        </CategoryBtn>
-        <CategoryBtn
-          active={category === "주거 환경"}
-          onClick={() => setCategory("주거 환경")}
-        >
-          {category === "주거 환경" ? <SofaIconWhite /> : <SofaIcon />}
-          주거 환경
-        </CategoryBtn>
-        <CategoryBtn
-          active={category === "취미 및 사회활동"}
-          onClick={() => setCategory("취미 및 사회활동")}
-        >
-          {category === "취미 및 사회활동" ? (
-            <DumbbellIconWhite />
-          ) : (
-            <DumbbellIcon />
-          )}
-          취미 및 사회활동
-        </CategoryBtn>
-        <CategoryBtn
-          active={category === "소통 및 케어"}
-          onClick={() => setCategory("소통 및 케어")}
-        >
-          {category === "소통 및 케어" ? <HandIconWhite /> : <HandIcon />}
-          소통 및 케어
-        </CategoryBtn>
+        {(
+          [
+            "전체",
+            "외출 및 이동",
+            "일상 생활",
+            "주거 환경",
+            "취미 및 사회활동",
+            "소통 및 케어",
+          ] as Category[]
+        ).map((c) => (
+          <CategoryBtn
+            key={c}
+            active={category === c}
+            onClick={() => setCategory(c)}
+          >
+            {c === "외출 및 이동" ? (
+              category === c ? (
+                <ShoeIconWhite />
+              ) : (
+                <ShoeIcon />
+              )
+            ) : c === "일상 생활" ? (
+              category === c ? (
+                <HumanIconWhite />
+              ) : (
+                <HumanIcon />
+              )
+            ) : c === "주거 환경" ? (
+              category === c ? (
+                <SofaIconWhite />
+              ) : (
+                <SofaIcon />
+              )
+            ) : c === "취미 및 사회활동" ? (
+              category === c ? (
+                <DumbbellIconWhite />
+              ) : (
+                <DumbbellIcon />
+              )
+            ) : c === "소통 및 케어" ? (
+              category === c ? (
+                <HandIconWhite />
+              ) : (
+                <HandIcon />
+              )
+            ) : null}
+            {c}
+          </CategoryBtn>
+        ))}
       </section>
 
+      {/* render only filtered items */}
       <section className="flex flex-col gap-[20px] p-[16px]">
-        <BoardContent icon={<ShoeIcon />} />
-        <BoardContent icon={<HumanIcon />} />
-        <BoardContent icon={<SofaIcon />} />
-        <BoardContent icon={<DumbbellIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
-        <BoardContent icon={<HandIcon />} />
+        {filtered.map(({ id, icon }) => (
+          <BoardContent key={id} icon={icon} />
+        ))}
       </section>
 
       <div className="flex justify-end">
