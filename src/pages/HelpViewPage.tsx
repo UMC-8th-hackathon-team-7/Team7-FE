@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { HelpInfoCard } from "@/components/HelpInfoCard";
 import { ProfileSection } from "@/components/ProfileSection";
 import { Header } from "@/components/commons/Header";
@@ -9,6 +9,7 @@ import { useHelpStore } from "@/store/helpStore";
 const HelpViewPage = () => {
     const { id } = useParams<{ id: string }>();
     const helpData = useHelpStore((state) => state.getHelpById(id || ""));
+    const navigate = useNavigate();
 
   if (!helpData) return <div className="p-4 text-center">해당 도움 요청을 찾을 수 없습니다.</div>;
   return (
@@ -24,7 +25,7 @@ const HelpViewPage = () => {
   selectedTargetName={helpData.targetProfile.name}
 />
 
-      <Button text="채팅하기" onClick={() => console.log("clicked")} />
+      <Button text="채팅하기" onClick={() => navigate("/chat")} />
 
     </div>
   );
