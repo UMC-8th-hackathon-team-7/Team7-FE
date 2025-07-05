@@ -51,13 +51,15 @@ interface InfoItemProps {
 }
 
 const InfoItem: React.FC<InfoItemProps> = ({ icon, label, value }) => (
-  <div className="flex items-center gap-2">
+  <div className="flex items-center">
     <img
         src={`/icons/${icon}`}
         alt={`${label} 아이콘`}
         className="w-4 h-4"
       />
+      <div className="flex items-center gap-[50px]">
     <span className="text-sm text-gray-600 font-medium">{label}</span>
     <span className="text-sm text-gray-800">{value}</span>
+    </div>
   </div>
 );
