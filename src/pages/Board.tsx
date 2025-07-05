@@ -17,6 +17,7 @@ import search from "./../assets/board/ic_search.svg";
 import plus from "./../assets/board/ic_plus.svg";
 import clsx from "clsx";
 import { axiosClient } from "@/apis/axiosClient";
+import { useNavigate } from "react-router-dom";
 
 type Category =
   | "전체"
@@ -45,6 +46,8 @@ const Board = () => {
 
   const sentinelRef = useRef<HTMLDivElement>(null);
   const [isSticky, setIsSticky] = useState(false);
+
+  const navigate = useNavigate();
 
   // 1) 카테고리 이름 → ID 매핑
   const categoryMap: Record<Category, number> = {
@@ -192,7 +195,8 @@ const Board = () => {
       </section>
 
       <div className="flex justify-end">
-        <button className="flex items-center gap-[8px] fixed bottom-[72px] right-[calc(50% + 345.5px)] translate-x-[-16px] p-[16px] rounded-[12px] bg-[#4288EB] text-[var(--color-elevated)] text-body font-[500] cursor-pointer">
+        <button className="flex items-center gap-[8px] fixed bottom-[72px] right-[calc(50% + 345.5px)] translate-x-[-16px] p-[16px] rounded-[12px] bg-[#4288EB] text-[var(--color-elevated)] text-body font-[500] cursor-pointer"
+            onClick={() => navigate("/help/ask")}>
           <img src={plus} alt="" />
           도움 요청
         </button>
