@@ -10,6 +10,7 @@ import type { User } from "@/types/user";
 import SignUp3 from "./SignUp3";
 import SignUp4 from "./SignUp4";
 import { axiosClient } from "@/apis/axiosClient";
+import { useNavigate } from "react-router-dom";
 
 export interface BaseSignUpPayload {
   phoneNumber: string;
@@ -58,6 +59,8 @@ const SignUpDefault = () => {
     disabilityPart: "",
     disabilitySeverity: 3,
   });
+
+  const navigate = useNavigate();
 
   const handleNextStep = () => {
     setStep(step + 1);
@@ -110,6 +113,18 @@ const SignUpDefault = () => {
         // TODO: 리다이렉트 등
       } else {
         alert(data.error!.reason);
+      }
+
+      const { data: loginData } = await axiosClient.post("/auth/login", {
+        phoneNumber: userInfo.phone,
+        password: "1234",
+      });
+
+      if (loginData.resultType === "SUCCESS") {
+        alert(loginData.success!.message);
+        navigate("/board");
+      } else {
+        alert(loginData.error!.reason);
       }
     } catch (err) {
       console.error(err);
