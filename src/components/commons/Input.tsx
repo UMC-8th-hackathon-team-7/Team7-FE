@@ -21,7 +21,7 @@ export const Input: React.FC<InputProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-start gap-2 w-full">
+    <div className="flex flex-col items-start gap-2 w-full px-4 py-3 rounded-[12px] backdrop-blur bg-[#F5F5F5]">
       {/* 제목 */}
       <label
         className="text-[14px] font-medium leading-[20px] tracking-[-0.28px] text-content-additive"
@@ -31,9 +31,6 @@ export const Input: React.FC<InputProps> = ({
       </label>
 
       {/* 입력 필드 */}
-      <div
-        className="w-full rounded-[12px] backdrop-blur bg-background-fill-regular px-4 py-3"
-      >
         <textarea
           value={inputValue}
           onChange={handleChange}
@@ -42,13 +39,13 @@ export const Input: React.FC<InputProps> = ({
                      font-medium tracking-[-0.28px]"
           rows={4}
           style={{
+            background: "rgba(245, 245, 245, 0.9)", 
             fontFamily: 'var(--Family, "SUIT Variable")',
             fontSize: "14px",
             lineHeight: "20px",
             fontWeight: 500,
           }}
         />
-      </div>
     </div>
   );
 };
