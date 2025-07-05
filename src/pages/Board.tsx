@@ -1,19 +1,22 @@
+import { useState } from "react";
 import CategoryBtn from "@/components/board/CategoryBtn";
-import bell from "./../assets/board/ic_bell.svg";
-import openArrow from "./../assets/board/ic_open_arrow.svg";
-import search from "./../assets/board/ic_search.svg";
+
 import BoardContent from "@/components/board/BoardContent";
 import ShoeIcon from "@/components/board/icons/ShoeIcon";
 import HumanIcon from "@/components/board/icons/HumanIcon";
 import SofaIcon from "@/components/board/icons/SofaIcon";
 import DumbbellIcon from "@/components/board/icons/DumbbellIcon";
 import HandIcon from "@/components/board/icons/HandIcon";
-import { useState } from "react";
 import ShoeIconWhite from "@/components/board/icons/ShoeIconWhite";
 import HumanIconWhite from "@/components/board/icons/HumanIconWhite";
 import SofaIconWhite from "@/components/board/icons/SofaIconWhite";
 import DumbbellIconWhite from "@/components/board/icons/DumbbellIconWhite";
 import HandIconWhite from "@/components/board/icons/HandIconWhite";
+
+import bell from "./../assets/board/ic_bell.svg";
+import openArrow from "./../assets/board/ic_open_arrow.svg";
+import search from "./../assets/board/ic_search.svg";
+import plus from "./../assets/board/ic_plus.svg";
 
 type Category =
   | "전체"
@@ -27,7 +30,7 @@ const Board = () => {
   const [category, setCategory] = useState<Category>("전체");
 
   return (
-    <main className="mx-auto w-full min-h-screen bg-[var(--color-root-strong)]">
+    <main className="mx-auto w-full min-h-screen bg-[var(--color-root-strong)] relative">
       <section className="flex justify-between px-[16px] py-[12px] w-full">
         <div className="flex items-center gap-[6px]">
           <h3 className="text-title font-[700]">공덕역</h3>
@@ -100,6 +103,13 @@ const Board = () => {
         <BoardContent icon={<DumbbellIcon />} />
         <BoardContent icon={<HandIcon />} />
       </section>
+
+      <div className="flex justify-end">
+        <button className="flex items-center gap-[8px] fixed bottom-[72px] right-[calc(50% + 345.5px)] translate-x-[-16px] p-[16px] rounded-[12px] bg-[#4288EB] text-[var(--color-elevated)] text-body font-[500] cursor-pointer">
+          <img src={plus} alt="" />
+          도움 요청
+        </button>
+      </div>
     </main>
   );
 };
