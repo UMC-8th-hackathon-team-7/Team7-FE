@@ -1,35 +1,121 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import closeIcon from "../../../assets/my_activity/ic_close.svg";
+import { axiosClient } from "@/apis/axiosClient";
 
 interface Guardian {
   id: string;
   name: string;
+  phoneNumber: string;
   age: number;
   region: string;
 }
 
-const dummyGuardians = [
-  {
-    id: "1",
-    name: "이수성",
-    phoneNumber: "010-0000-0000",
-    age: 20,
-    region: "서울 마포구",
-  },
-  {
-    id: "2",
-    name: "가나다",
-    phoneNumber: "010-0000-0001",
-    age: 20,
-    region: "서울 마포구",
-  },
-];
+interface IdByPhoneResponse {
+  resultType: "SUCCESS" | "FAIL";
+  error: { reason: string } | null;
+  success: { userId: number } | null;
+}
+
+interface ProfileResponse {
+  resultType: "SUCCESS" | "FAIL";
+  error: { reason: string } | null;
+  success: {
+    userId: number;
+    profileImage: string;
+    phoneNumber: string;
+    isDisabled: boolean;
+    name: string;
+    birthdate: string; // ISO string
+    residenceArea: string;
+    createdAt: string;
+    updatedAt: string;
+  } | null;
+}
+
+const calculateAge = (birthdate: string): number => {
+  const birth = new Date(birthdate);
+  const now = new Date();
+  let age = now.getFullYear() - birth.getFullYear();
+  const m = now.getMonth() - birth.getMonth();
+  if (m < 0 || (m === 0 && now.getDate() < birth.getDate())) {
+    age--;
+  }
+  return age;
+};
 
 const SignUp4 = ({ handleNextStep }: { handleNextStep: () => void }) => {
   const [search, setSearch] = useState("");
-  const [searchResults, setSearchResults] =
-    useState<Guardian[]>(dummyGuardians);
+  const [searchResults, setSearchResults] = useState<Guardian[]>([]);
   const [selectedGuardian, setSelectedGuardian] = useState("");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancel = false;
+    const fetchGuardian = async () => {
+      try {
+        // 1) 전화번호로 ID 조회
+        const idRes = await axiosClient.get<IdByPhoneResponse>(
+          "/auth/id-by-phone",
+          {
+            params: { phoneNumber: search },
+          }
+        );
+
+        if (cancel) return;
+
+        if (idRes.data.resultType === "SUCCESS" && idRes.data.success) {
+          const userId = idRes.data.success.userId;
+
+          // 2) 프로필 조회
+          const profileRes = await axiosClient.get<ProfileResponse>(
+            `/profile/${userId}`
+          );
+
+          if (cancel) return;
+
+          if (
+            profileRes.data.resultType === "SUCCESS" &&
+            profileRes.data.success
+          ) {
+            const p = profileRes.data.success;
+            const guardian: Guardian = {
+              id: p.userId.toString(),
+              name: p.name,
+              phoneNumber: p.phoneNumber,
+              age: calculateAge(p.birthdate),
+              region: p.residenceArea,
+            };
+            setSearchResults([guardian]);
+            setErrorMessage(null);
+          } else {
+            setSearchResults([]);
+            setErrorMessage(
+              profileRes.data.error?.reason || "프로필 조회 실패"
+            );
+          }
+        } else {
+          setSearchResults([]);
+          setErrorMessage(idRes.data.error?.reason || "ID 조회 실패");
+        }
+      } catch {
+        if (!cancel) {
+          setSearchResults([]);
+          setErrorMessage("전화번호가 일치하지 않습니다.");
+        }
+      }
+    };
+
+    if (search.trim()) {
+      fetchGuardian();
+    } else {
+      setSearchResults([]);
+      setErrorMessage(null);
+    }
+
+    return () => {
+      cancel = true;
+    };
+  }, [search]);
 
   return (
     <section className="flex flex-col justify-between h-[calc(100vh-70px)] px-[20px] py-[12px]">
@@ -68,32 +154,39 @@ const SignUp4 = ({ handleNextStep }: { handleNextStep: () => void }) => {
             <p className="mt-[12px] text-subhead font-[700] text-[var(--color-base)] ">
               검색 결과
             </p>
-            {searchResults.map((g) => (
-              <section
-                key={g.id}
-                className="flex justify-between items-center mt-[18px]"
-              >
-                <div className="flex items-center gap-[12px]">
-                  <div className="size-[48px] rounded-full bg-[#ddd]" />
-                  <div className="flex flex-col gap-[2px]">
-                    <p className="text-[var(--color-assistive)] text-footnote font-[400]">
-                      {g.age}세 | {g.region}
-                    </p>
-                    <p className="text-[var(--color-base)] text-body font-[500]">
-                      {g.name}
-                    </p>
+
+            {errorMessage ? (
+              <p className="mt-[8px] text-footnote text-[var(--color-additive)]">
+                {errorMessage}
+              </p>
+            ) : (
+              searchResults.map((g) => (
+                <section
+                  key={g.id}
+                  className="flex justify-between items-center mt-[18px]"
+                >
+                  <div className="flex items-center gap-[12px]">
+                    <div className="size-[48px] rounded-full bg-[#ddd]" />
+                    <div className="flex flex-col gap-[2px]">
+                      <p className="text-[var(--color-assistive)] text-footnote font-[400]">
+                        {g.age}세 | {g.region}
+                      </p>
+                      <p className="text-[var(--color-base)] text-body font-[500]">
+                        {g.name}
+                      </p>
+                    </div>
                   </div>
-                </div>
-                <input
-                  className="size-[24px]"
-                  type="radio"
-                  name="guardian"
-                  value={g.id}
-                  checked={selectedGuardian === g.id}
-                  onChange={(e) => setSelectedGuardian(e.currentTarget.value)}
-                />
-              </section>
-            ))}
+                  <input
+                    className="size-[24px]"
+                    type="radio"
+                    name="guardian"
+                    value={g.id}
+                    checked={selectedGuardian === g.id}
+                    onChange={(e) => setSelectedGuardian(e.currentTarget.value)}
+                  />
+                </section>
+              ))
+            )}
           </>
         )}
       </div>

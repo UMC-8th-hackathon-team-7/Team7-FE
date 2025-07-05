@@ -9,6 +9,7 @@ import SignUp2 from "./SignUp2";
 import type { User } from "@/types/user";
 import SignUp3 from "./SignUp3";
 import SignUp4 from "./SignUp4";
+import { axiosClient } from "@/apis/axiosClient";
 
 const SignUpDefault = () => {
   const [isGuardian, setIsGuardian] = useState(true);
@@ -32,7 +33,12 @@ const SignUpDefault = () => {
 
   const handleSignUp = async () => {
     // axios 호출
-    console.log(userInfo);
+    try {
+      const response = await axiosClient.post("/users", userInfo);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
