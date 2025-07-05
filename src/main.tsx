@@ -4,9 +4,12 @@ import "./index.css";
 import App from "./App.tsx";
 import "./styles/colors.css";
 import "./styles/texts.css";
+import { BottomBarProvider } from "./contexts/BottomBarContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    <BottomBarProvider>
+      <App />
+    </BottomBarProvider>
   </StrictMode>
 );

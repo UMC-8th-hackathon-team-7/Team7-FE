@@ -4,24 +4,10 @@
   letter-spacing: -1.44px;
 }
 
-.text-display-strong {
-  font-size: var(--Size-Display, 48px);
-  line-height: var(--Line-Height-Display, 70px); /* 145.833% */
-  letter-spacing: -1.44px;
-  font-weight: 700;
-}
-
 .text-title {
   font-size: var(--Size-Title, 24px);
   line-height: var(--Line-Height-Title, 34px); /* 141.667% */
   letter-spacing: -0.48px;
-}
-
-.text-title-strong {
-  font-size: var(--Size-Title, 24px);
-  line-height: var(--Line-Height-Title, 34px); /* 141.667% */
-  letter-spacing: -0.48px;
-  font-weight: 700;
 }
 
 .text-headline {
