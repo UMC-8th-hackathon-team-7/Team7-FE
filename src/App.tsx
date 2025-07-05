@@ -7,6 +7,7 @@ import MyActivity from "./pages/my_activity/MyActivity";
 import UseMileage from "./pages/my_activity/UseMileage";
 import Landing from "./pages/auth/Landing";
 import NoBottomBarLayout from "./layouts/NoBottomBarLayout";
+import SignUpDefault from "./pages/auth/signup/SignUpDefault";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Landing />,
+      },
+      {
+        path: "signup",
+        element: <SignUpDefault />,
       },
     ],
   },
