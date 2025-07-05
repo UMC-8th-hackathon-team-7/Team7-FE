@@ -6,6 +6,8 @@ import Board from "./pages/Board";
 import { useEffect } from "react";
 import { useUserStore } from "@/store/userStore";
 import { mockGuardian } from "./store/userStore";
+import MyActivity from "./pages/my_activity/MyActivity";
+import UseMileage from "./pages/my_activity/UseMileage";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +25,14 @@ const router = createBrowserRouter([
       {
         path: "board",
         element: <Board />,
+      },
+      {
+        path: "my-activity",
+        element: <MyActivity />,
+      },
+      {
+        path: "use-mileage",
+        element: <UseMileage />,
       },
     ],
   },
