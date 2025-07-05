@@ -6,6 +6,7 @@ export const fontSize = {
     subhead: "18px",
     body: "16px",
     small: "14px",
+    callout: "14px",
     footnote: "12px",
     caption: "10px",
   };
@@ -17,6 +18,7 @@ export const fontSize = {
     subhead: "26px",
     body: "24px",
     small: "24px",
+    callout: "20px",
     footnote: "18px",
     caption: "14px",
   };

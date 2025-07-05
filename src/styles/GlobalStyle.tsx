@@ -35,7 +35,7 @@ const GlobalStyle = createGlobalStyle`
     --background-root-regular: #FFFFFF;
     --background-root-strong: #F2F4F7;
     --background-fill-regular: #EEF0F2;
-    --background-fill-strong: #EAECEFii;
+    --background-fill-strong: #EAECEF;
     --background-fill-static: #FFFFFF;
     --background-fill-interactive: #FDFDFE;
     --background-fill-inverted: #111214;
