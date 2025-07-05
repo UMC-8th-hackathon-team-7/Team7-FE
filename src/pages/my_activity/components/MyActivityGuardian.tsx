@@ -7,8 +7,35 @@ import rightArrow from "../../../assets/board/ic_right_arrow.svg";
 import wallet from "../../../assets/my_activity/guardian/ic_wallet.svg";
 import timer from "../../../assets/my_activity/guardian/ic_timer.svg";
 import newIcon from "../../../assets/my_activity/guardian/ic_new.svg";
+import { useState, Fragment } from "react";
 
 const MyActivityGuardian = () => {
+  const [isMatched, setIsMatched] = useState(true);
+
+  const matchedGuardians = [
+    {
+      id: "g1",
+      ageLocation: "20세 | 서울 마포구",
+      name: "이수성",
+      phone: "010-0000-0000",
+      details: [
+        { label: "특이사항", value: "계단이 많으면 어려워해요 ㅠㅠ" },
+        { label: "장애 부위", value: "하지 (다리)" },
+        { label: "장애 정도", value: "5" },
+      ],
+    },
+    {
+      id: "g2",
+      ageLocation: "20세 | 서울 마포구",
+      name: "이수성",
+      phone: "010-0000-0000",
+      details: [
+        { label: "특이사항", value: "계단이 많으면 어려워해요 ㅠㅠ" },
+        { label: "장애 부위", value: "하지 (다리)" },
+        { label: "장애 정도", value: "5" },
+      ],
+    },
+  ];
   return (
     <>
       <RoundBox className="flex flex-col gap-[12px] px-[16px] py-[12px] my-[8px]">
@@ -33,6 +60,74 @@ const MyActivityGuardian = () => {
           </GrayBtn>
         </section>
       </RoundBox>
+
+      {isMatched && (
+        <RoundBox className="flex flex-col gap-[12px] px-[20px] py-[10px] my-[8px]">
+          <p className="text-[var(--color-assistive)] text-footnote font-[400]">
+            도움 받는 사람
+          </p>
+
+          {matchedGuardians.map((g, idx) => (
+            <Fragment key={g.id}>
+              <section className="flex justify-between items-center">
+                <div className="flex items-center gap-[12px]">
+                  <div className="size-[48px] rounded-full bg-[#ddd]"></div>
+                  <div className="flex flex-col gap-[2px]">
+                    <p className="text-[var(--color-assistive)] text-footnote font-[400]">
+                      {g.ageLocation}
+                    </p>
+                    <p className="text-[var(--color-subhead)] text-body font-[500]">
+                      {g.name}
+                    </p>
+                    <p className="text-[var(--color-additive)] text-footnote font-[400]">
+                      010-0000-0000
+                    </p>
+                  </div>
+                </div>
+                <GrayBtn className="cursor-pointer">
+                  <img src={edit} alt="" />
+                  편집
+                </GrayBtn>
+              </section>
+
+              <section className="flex flex-col gap-[10px]">
+                <div className="flex">
+                  <p className="w-[64px] text-[var(--color-assistive)] text-callout font-[400]">
+                    특이사항
+                  </p>
+                  <p className="text-[var(--color-additive)] text-callout font-[500]">
+                    {g.details[0].value}
+                  </p>
+                </div>
+                <div className="flex">
+                  <p className="w-[64px] text-[var(--color-assistive)] text-callout font-[400]">
+                    장애 부위
+                  </p>
+                  <p className="text-[var(--color-additive)] text-callout font-[500]">
+                    {g.details[1].value}
+                  </p>
+                </div>
+                <div className="flex">
+                  <p className="w-[64px] text-[var(--color-assistive)] text-callout font-[400]">
+                    장애 정도
+                  </p>
+                  <p className="text-[var(--color-additive)] text-callout font-[500]">
+                    {g.details[2].value}
+                  </p>
+                </div>
+              </section>
+
+              {/* 구분선 */}
+              {idx < matchedGuardians.length - 1 && (
+                <hr
+                  className="my-[8px] border-t"
+                  style={{ borderColor: "rgba(146, 157, 173, 0.2)" }}
+                />
+              )}
+            </Fragment>
+          ))}
+        </RoundBox>
+      )}
 
       <RoundBox className="flex flex-col gap-[12px] px-[20px] py-[10px] my-[8px]">
         <p className="text-[var(--color-assistive)] text-footnote font-[400]">
