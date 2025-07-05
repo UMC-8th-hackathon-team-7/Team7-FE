@@ -1,15 +1,15 @@
 import RoundBox from "@/components/my_activity/RoundBox";
-import setting from "../assets/my_activity/ic_setting.svg";
+import setting from "../../assets/my_activity/ic_setting.svg";
 import GrayBtn from "@/components/my_activity/GrayBtn";
-import edit from "../assets/my_activity/ic_edit.svg";
-import history from "../assets/my_activity/ic_history.svg";
-import rightArrow from "../assets/board/ic_right_arrow.svg";
-import plus from "../assets/my_activity/ic_plus_black.svg";
+import edit from "../../assets/my_activity/ic_edit.svg";
+import history from "../../assets/my_activity/ic_history.svg";
+import rightArrow from "../../assets/board/ic_right_arrow.svg";
+import plus from "../../assets/my_activity/ic_plus_black.svg";
 import { Dialog, IconButton, Slide } from "@mui/material";
 import { forwardRef, useEffect, useState, type ReactElement } from "react";
 import type { TransitionProps } from "@mui/material/transitions";
-import closeIcon from "../assets/my_activity/ic_close.svg";
-import remove from "../assets/my_activity/ic_remove.svg";
+import closeIcon from "../../assets/my_activity/ic_close.svg";
+import remove from "../../assets/my_activity/ic_remove.svg";
 
 const Transition = forwardRef<
   unknown,
