@@ -1,13 +1,16 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout";
 import HelpViewPage from "@/pages/HelpViewPage";
-import HelpAskPage from "@/pages/HelpAskPage"
+import HelpAskPage from "@/pages/HelpAskPage";
 import Board from "./pages/Board";
 import { useEffect } from "react";
 import { useUserStore } from "@/store/userStore";
 import { mockGuardian } from "./store/userStore";
 import MyActivity from "./pages/my_activity/MyActivity";
 import UseMileage from "./pages/my_activity/UseMileage";
+import Landing from "./pages/auth/Landing";
+import NoBottomBarLayout from "./layouts/NoBottomBarLayout";
+import SignUpDefault from "./pages/auth/signup/SignUpDefault";
 import LocationPage from "./pages/LocationPage";
 
 const router = createBrowserRouter([
@@ -17,7 +20,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "help/view/:id",
-        element: <HelpViewPage />, 
+        element: <HelpViewPage />,
       },
       {
         path: "help/ask",
@@ -38,6 +41,20 @@ const router = createBrowserRouter([
       {
         path: "map",
         element: <LocationPage />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <NoBottomBarLayout />,
+    children: [
+      {
+        index: true,
+        element: <Landing />,
+      },
+      {
+        path: "signup",
+        element: <SignUpDefault />,
       },
     ],
   },
