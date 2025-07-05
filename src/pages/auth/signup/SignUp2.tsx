@@ -104,8 +104,7 @@ const SignUp2: React.FC<SignUpProps> = ({
                   onClick={() =>
                     setUserInfo((prev) => ({
                       ...prev,
-                      disabilityPartId: opt.id,
-                      disabilityPartLabel: opt.label,
+                      disabilityPart: String(opt.id),
                     }))
                   }
                   className={`px-[10px] py-[6px] rounded-[8px] ${
