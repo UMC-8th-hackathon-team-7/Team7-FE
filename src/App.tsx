@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout";
 import Board from "./pages/Board";
 import MyActivity from "./pages/my_activity/MyActivity";
+import UseMileage from "./pages/my_activity/UseMileage";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
       {
         path: "my-activity",
         element: <MyActivity />,
+      },
+      {
+        path: "use-mileage",
+        element: <UseMileage />,
       },
     ],
   },
