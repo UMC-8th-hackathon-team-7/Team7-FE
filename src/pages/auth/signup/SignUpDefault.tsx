@@ -11,6 +11,42 @@ import SignUp3 from "./SignUp3";
 import SignUp4 from "./SignUp4";
 import { axiosClient } from "@/apis/axiosClient";
 
+export interface BaseSignUpPayload {
+  phoneNumber: string;
+  password: string;
+  name: string;
+  birthdate: string; // "YYYY-MM-DD"
+  residenceArea: string;
+}
+
+export interface NonDisabledPayload extends BaseSignUpPayload {
+  isDisabled: false;
+}
+
+export interface DisabledPayload extends BaseSignUpPayload {
+  isDisabled: true;
+  disabledTypeId: number;
+  disabilityLevel: number;
+  description: string;
+  assistantId?: number;
+  profileImage?: string;
+}
+
+export type SignUpPayload = NonDisabledPayload | DisabledPayload;
+export interface SignUpResponse {
+  resultType: "SUCCESS" | "FAIL";
+  success?: { message: string };
+  error?: {
+    errorCode: string;
+    reason: string;
+    data: {
+      errorCode: string;
+      reason: string;
+      data: null;
+    };
+  };
+}
+
 const SignUpDefault = () => {
   const [isGuardian, setIsGuardian] = useState(true);
   const [step, setStep] = useState(1);
@@ -28,16 +64,56 @@ const SignUpDefault = () => {
   };
 
   const handlePrevStep = () => {
+    if (step === 1) return;
     setStep(step - 1);
   };
 
   const handleSignUp = async () => {
-    // axios 호출
     try {
-      const response = await axiosClient.post("/users", userInfo);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
+      // 공통 필드만 모아두고
+      const base: BaseSignUpPayload = {
+        phoneNumber: userInfo.phone,
+        password: "1234",
+        name: userInfo.name,
+        birthdate: userInfo.birth,
+        residenceArea: "서울특별시 마포구",
+      };
+
+      let payload: SignUpPayload;
+
+      if (isGuardian) {
+        // isDisabled === true branch
+        payload = {
+          ...base,
+          isDisabled: false,
+          profileImage: "",
+        } as NonDisabledPayload;
+      } else {
+        // isDisabled === false branch
+        payload = {
+          ...base,
+          isDisabled: true,
+          disabledTypeId: Number(userInfo.disabilityPart), // string → number
+          disabilityLevel: userInfo.disabilitySeverity,
+          description: userInfo.specialCondition,
+          profileImage: "",
+        } as DisabledPayload;
+      }
+
+      const { data } = await axiosClient.post<SignUpResponse>(
+        "/auth/register",
+        payload
+      );
+
+      if (data.resultType === "SUCCESS") {
+        alert(data.success!.message);
+        // TODO: 리다이렉트 등
+      } else {
+        alert(data.error!.reason);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("회원가입 중 오류가 발생했습니다.");
     }
   };
 
@@ -45,7 +121,7 @@ const SignUpDefault = () => {
     <div className="flex-1 overflow-y-auto">
       <main className="mx-auto px-[16px] w-full min-h-screen">
         <section className="flex justify-between items-center px-[4px] py-[13px] h-[60px]">
-          <button className="cursor-pointer">
+          <button className="cursor-pointer" onClick={handlePrevStep}>
             <img src={arrowBack} alt="" />
           </button>
           <h1 className="text-subhead font-[500]">회원가입</h1>

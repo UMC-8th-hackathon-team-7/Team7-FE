@@ -1,14 +1,23 @@
 import React from "react";
 import InputField from "@/components/commons/InputField";
-import type { User, Disabled } from "@/types/user";
 import { Slider, Typography, Box } from "@mui/material";
+import type { User } from "@/types/user";
 
 interface SignUpProps {
   isGuardian: boolean;
   handleNextStep: () => void;
-  userInfo: User | Disabled;
+  userInfo: User;
   setUserInfo: React.Dispatch<React.SetStateAction<User>>;
 }
+
+// 장애 부위 옵션을 id와 label 쌍으로 정의
+const PART_OPTIONS = [
+  { id: 1, label: "상지" },
+  { id: 2, label: "하지" },
+  { id: 3, label: "척추" },
+  { id: 4, label: "몸통" },
+  { id: 5, label: "전신" },
+];
 
 const marks = [
   { value: 1, label: "1" },
@@ -24,20 +33,20 @@ const SignUp2: React.FC<SignUpProps> = ({
   userInfo,
   setUserInfo,
 }) => {
-  const selectedPart = userInfo.disabilityPart;
+  const selectedPartId = userInfo.disabilityPart;
   const severity = userInfo.disabilitySeverity ?? 3;
 
   const handleSeverityChange = (_: Event, value: number | number[]) => {
-    setUserInfo({
-      ...userInfo,
+    setUserInfo((prev) => ({
+      ...prev,
       disabilitySeverity: value as number,
-    });
+    }));
   };
 
   const isBasicValid = !!userInfo.name && !!userInfo.birth && !!userInfo.phone;
   const isGuardianValid =
     !!userInfo.specialCondition &&
-    !!userInfo.disabilityPart &&
+    !!selectedPartId &&
     userInfo.disabilitySeverity !== undefined;
   const isFormValid = isGuardian
     ? isBasicValid
@@ -59,19 +68,19 @@ const SignUp2: React.FC<SignUpProps> = ({
           label="이름"
           placeholder="이름을 입력해주세요"
           value={userInfo.name}
-          onChange={(e) => setUserInfo({ ...userInfo, name: e })}
+          onChange={(e) => setUserInfo((prev) => ({ ...prev, name: e }))}
         />
         <InputField
           label="생년월일"
           placeholder="0000년 형식으로 입력해주세요"
           value={userInfo.birth}
-          onChange={(e) => setUserInfo({ ...userInfo, birth: e })}
+          onChange={(e) => setUserInfo((prev) => ({ ...prev, birth: e }))}
         />
         <InputField
           label="전화번호"
           placeholder="01000000000 형식으로 입력해주세요"
           value={userInfo.phone}
-          onChange={(e) => setUserInfo({ ...userInfo, phone: e })}
+          onChange={(e) => setUserInfo((prev) => ({ ...prev, phone: e }))}
         />
 
         {!isGuardian && (
@@ -81,7 +90,7 @@ const SignUp2: React.FC<SignUpProps> = ({
               placeholder="꼭 필요한 특이사항을 입력해주세요"
               value={userInfo.specialCondition}
               onChange={(e) =>
-                setUserInfo({ ...userInfo, specialCondition: e })
+                setUserInfo((prev) => ({ ...prev, specialCondition: e }))
               }
             />
 
@@ -89,22 +98,23 @@ const SignUp2: React.FC<SignUpProps> = ({
               장애 부위
             </p>
             <div className="flex gap-[8px]">
-              {["상지", "하지", "척추", "몸통", "전신"].map((part) => (
+              {PART_OPTIONS.map((opt) => (
                 <button
-                  key={part}
+                  key={opt.id}
                   onClick={() =>
-                    setUserInfo({
-                      ...userInfo,
-                      disabilityPart: part,
-                    })
+                    setUserInfo((prev) => ({
+                      ...prev,
+                      disabilityPartId: opt.id,
+                      disabilityPartLabel: opt.label,
+                    }))
                   }
                   className={`px-[10px] py-[6px] rounded-[8px] ${
-                    selectedPart === part
+                    selectedPartId === String(opt.id)
                       ? "bg-[var(--color-fill-inverted)] text-[var(--color-inverted)]"
                       : "bg-[var(--color-fill-regular)] text-[var(--color-disabled)]"
                   } text-body font-[500]`}
                 >
-                  {part}
+                  {opt.label}
                 </button>
               ))}
             </div>
@@ -131,7 +141,6 @@ const SignUp2: React.FC<SignUpProps> = ({
                 max={5}
                 valueLabelDisplay="auto"
                 sx={{
-                  color: "#4288EB",
                   height: 8,
                   "& .MuiSlider-thumb": {
                     width: 24,
