@@ -18,11 +18,13 @@ interface HelpData {
 }
 
 interface HelpStore {
-  help: HelpData | null;
+  help: HelpData[];
   setHelp: (data: HelpData) => void;
+  getHelpById: (id: string) => HelpData | undefined;
 }
 
-export const useHelpStore = create<HelpStore>((set) => ({
-  help: null,
-  setHelp: (data) => set({ help: data }),
+export const useHelpStore = create<HelpStore>((set, get) => ({
+  help: [],
+  setHelp: (data) => set((state) => ({ help: [...state.help, data] })),
+  getHelpById: (id) => get().help.find((h) => h.id === id),
 }));

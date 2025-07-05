@@ -5,6 +5,7 @@ import { Input } from "@/components/commons/Input";
 import { ProfileCard } from "@/components/ProfileCard";
 import { Button } from "@/components/commons/Button"
 import { useHelpStore } from "@/store/helpStore";
+import { useUserStore } from "@/store/userStore";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
@@ -53,8 +54,11 @@ const HelpAskPage = () => {
   const [location, setLocation] = useState("");
   const [time, setTime] = useState("");
 
+   const { currentUser } = useUserStore();
   const { setHelp } = useHelpStore();
   const navigate = useNavigate();
+  
+  if (!currentUser) return <div className="p-4 text-center">로그인이 필요합니다.</div>;
 
     const handleTargetToggle = (name: string) => {
   setSelectedTarget(prev => (prev === name ? null : name));
@@ -124,7 +128,7 @@ const handleSubmit = () => {
 />
             <SectionHeader title="도움 받을 사람" subtitle="한 명만 선택해주세요" />
 
-             {targetList.map((target) => (
+             {currentUser.targetList.map((target) => (
         <ProfileCard
           key={target.name}
           type="target"
