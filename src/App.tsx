@@ -33,14 +33,6 @@ const router = createBrowserRouter([
         element: <Board />,
       },
       {
-        path: "chat",
-        element: <ChatPage />,
-      },
-      {
-        path: "chat/:userId",
-        element: <ChatRoomPage />,
-      },
-      {
         path: "my-activity",
         element: <MyActivity />,
       },
@@ -66,6 +58,14 @@ const router = createBrowserRouter([
         path: "signup",
         element: <SignUpDefault />,
       },
+      {
+        path: "chat",
+        element: <ChatPage />,
+      },
+      {
+        path: "chat/:userId",
+        element: <ChatRoomPage />,
+      }
     ],
   },
 ]);
