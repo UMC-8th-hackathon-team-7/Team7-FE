@@ -6,12 +6,16 @@ import "./styles/colors.css";
 import "./styles/texts.css";
 import GlobalStyle from "./styles/GlobalStyle";
 import { BottomBarProvider } from "./contexts/BottomBarContext.tsx";
+import { AuthProvider } from "./contexts/AuthContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BottomBarProvider>
-      <GlobalStyle />
-      <App />
-    </BottomBarProvider>
+    <AuthProvider>
+      <BottomBarProvider>
+        <GlobalStyle />
+        <App />
+      </BottomBarProvider>
+    </AuthProvider>
   </StrictMode>
 );
+
