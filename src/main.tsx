@@ -5,11 +5,14 @@ import App from "./App.tsx";
 import "./styles/colors.css";
 import "./styles/texts.css";
 import { BottomBarProvider } from "./contexts/BottomBarContext.tsx";
+import { AuthProvider } from "./contexts/AuthContext.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BottomBarProvider>
-      <App />
-    </BottomBarProvider>
+    <AuthProvider>
+      <BottomBarProvider>
+        <App />
+      </BottomBarProvider>
+    </AuthProvider>
   </StrictMode>
 );
