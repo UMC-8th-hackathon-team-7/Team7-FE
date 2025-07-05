@@ -76,7 +76,10 @@ const Board = () => {
   );
 
   return (
-    <main className="flex-1 overflow-y-auto mx-auto w-full bg-[var(--color-root-strong)] relative">
+    <main
+      className="flex-1 overflow-y-auto mx-auto w-full bg-[var(--color-root-strong)] relative"
+      style={{ scrollbarGutter: "stable" }}
+    >
       <div ref={sentinelRef} className="h-0" />
 
       <section
