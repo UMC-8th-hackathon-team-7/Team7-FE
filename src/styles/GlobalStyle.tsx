@@ -32,26 +32,32 @@ const GlobalStyle = createGlobalStyle`
     --Line-Height-Footnote: 18px;
 
     /* 컬러 시스템 (라이트) */
-    --color-root-regular: #fff;
-    --color-root-strong: #f2f4f7;
-    --color-fill-regular: rgba(146, 157, 173, 0.92);
-    --color-fill-strong: rgba(146, 157, 173, 0.88);
-    --color-fill-static: #fff;
-    --color-fill-interactive: rgba(255, 255, 255, 0.8);
-    --color-fill-inverted: #111214;
+    --background-root-regular: #FFFFFF;
+    --background-root-strong: #F2F4F7;
+    --background-fill-regular: #EEF0F2;
+    --background-fill-strong: #EAECEFii;
+    --background-fill-static: #FFFFFF;
+    --background-fill-interactive: #FDFDFE;
+    --background-fill-inverted: #111214;
 
-    --color-base: #1d2633;
-    --color-additive: rgba(29, 38, 51, 0.8);
-    --color-assistive: rgba(29, 38, 51, 0.6);
-    --color-disabled: rgba(29, 38, 51, 0.4);
-    --color-inverted: #ebeef2;
-    --color-elevated: #fff;
+    --content-base: #1D2633;
+    --content-additive: #4A515C;
+    --content-assistive: #777D85;
+    --content-disabled: #A5A8AD;
+    --content-iinverted: #EBEEF2;
+    --content-elevated: #FFFFFF;
 
     /* semantic colors */
     --semantic-brand: #4288EB;
     --semantic-success: #16B874;
     --semantic-warning: #FFBF0F;
     --semantic-danger: #FF244B;
+
+    /* border colors */
+    --border-divider-regular: #E9EBEF;
+    --border-divider-strong: #1D2633;
+    --border-outline-regular: #EEEFF2;
+    --border-outline-strong: #1D2633;
   }
 
   @font-face {
