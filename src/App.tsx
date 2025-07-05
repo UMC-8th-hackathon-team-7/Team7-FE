@@ -3,6 +3,8 @@ import DefaultLayout from "./layouts/DefaultLayout";
 import HelpViewPage from "@/pages/HelpViewPage";
 import HelpAskPage from "@/pages/HelpAskPage"
 import Board from "./pages/Board";
+import MyActivity from "./pages/my_activity/MyActivity";
+import UseMileage from "./pages/my_activity/UseMileage";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +22,14 @@ const router = createBrowserRouter([
       {
         path: "board",
         element: <Board />,
+      },
+      {
+        path: "my-activity",
+        element: <MyActivity />,
+      },
+      {
+        path: "use-mileage",
+        element: <UseMileage />,
       },
     ],
   },
