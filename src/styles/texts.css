@@ -31,14 +31,14 @@
 .text-p-large {
   /* Paragraph/Large */
   font-size: var(--Size-Body, 16px);
-  line-height: var(--Line-Height-Body, 24px); /* 150% */
+  line-height: var(--Line-Height-Body, 26.4px); /* 150% */
   letter-spacing: -0.32px;
 }
 
 .text-p-small {
   /* Paragraph/Small */
   font-size: var(--Size-Paragraph-Small, 14px);
-  line-height: var(--Line-Height-Paragraph-Small, 24px); /* 171.429% */
+  line-height: var(--Line-Height-Paragraph-Small, 22px); /* 171.429% */
   letter-spacing: -0.42px;
 }
 
