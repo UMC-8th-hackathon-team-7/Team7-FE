@@ -4,10 +4,8 @@ import BottomBar from "../components/BottomBar";
 
 const DefaultLayout = () => {
   return (
-    <div className="flex flex-col w-screen max-w-[393px] min-h-screen mx-auto">
-      <div className="flex-1 overflow-auto">
-        <Outlet />
-      </div>
+    <div className="flex flex-col w-screen max-w-[393px] h-screen mx-auto">
+      <Outlet />
       <BottomBar />
     </div>
   );
