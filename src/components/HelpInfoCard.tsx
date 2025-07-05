@@ -27,7 +27,7 @@ export const HelpInfoCard: React.FC<HelpInfoCardProps> = ({
 
       {/* 내용 */}
       <p
-        className="text-[16px] font-medium leading-[28.8px] tracking-[-0.48px] text-content-additive w-full"
+        className="text-[16px] font-medium leading-[28.8px] tracking-[-0.48px] text-content-additive w-full break-words whitespace-pre-wrap"
         style={{ fontFamily: 'var(--Family, "SUIT Variable")' }}
       >
         {description}
