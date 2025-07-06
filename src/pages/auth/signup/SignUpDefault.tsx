@@ -111,7 +111,7 @@ const SignUpDefault = () => {
       );
 
       if (data.resultType === "SUCCESS") {
-        alert(data.success!.message);
+        // alert(data.success!.message);
         // TODO: 리다이렉트 등
       } else {
         alert(data.error!.reason);
@@ -123,7 +123,8 @@ const SignUpDefault = () => {
       });
 
       if (loginData.resultType === "SUCCESS") {
-        alert(loginData.success!.message);
+        // alert(loginData.success!.message);
+        console.log(isGuardian);
         login(
           loginData.success!.accessToken,
           isGuardian ? "guardian" : "disabled"
